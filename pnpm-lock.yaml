@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@types/node':
+        specifier: ^22.5.4
+        version: 22.5.4
       firebase:
         specifier: ^10.13.1
         version: 10.13.1
