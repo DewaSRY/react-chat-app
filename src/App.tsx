@@ -1,5 +1,7 @@
 import { cn } from "./lib/utils";
-
+import ListComponent from "./components/list/list-component";
+import ChatComponent from "./components/chat/chat-component";
+import DetailComponent from "./components/detail/detail-component";
 function App() {
   return (
     <div
@@ -8,7 +10,9 @@ function App() {
         "bg-gray-700/80 rounded-2xl backdrop-blur-sm saturate-[180%] "
       )}
     >
-      <div>hallo</div>
+      <ListComponent />
+      <ChatComponent />
+      <DetailComponent />
     </div>
   );
 }
