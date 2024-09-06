@@ -10,9 +10,11 @@ function App() {
         "bg-gray-700/80 rounded-2xl backdrop-blur-sm saturate-[180%] "
       )}
     >
-      <ListComponent />
-      <ChatComponent />
-      <DetailComponent />
+      <div className="flex gap-1 ">
+        <ListComponent />
+        <ChatComponent />
+        <DetailComponent />
+      </div>
     </div>
   );
 }
