@@ -3,7 +3,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-import { auth, db } from "./utils";
+import { auth, db, USER_DB, USER_CHAT_DB } from "./utils";
 import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
 
 import { UserLogin, UserRegister } from "@/types/user-types";
@@ -24,7 +24,7 @@ export async function userRegister(userRegister: UserRegister) {
     userRegister.password
   );
 
-  await setDoc(doc(db, "user", res.user.uid), {
+  await setDoc(doc(db, USER_DB, res.user.uid), {
     username: userRegister.username,
     email: userRegister.email,
     awatar: userRegister.avatar,
@@ -32,7 +32,7 @@ export async function userRegister(userRegister: UserRegister) {
     blocked: [],
   });
 
-  await setDoc(doc(db, "user-chats", res.user.uid), {
+  await setDoc(doc(db, USER_CHAT_DB, res.user.uid), {
     chats: [],
   });
 }

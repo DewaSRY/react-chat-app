@@ -1,10 +1,9 @@
 import { create } from "zustand";
-import { db } from "@/firebase/utils";
+import { db, USER_DB } from "@/firebase/utils";
 import { doc, getDoc } from "firebase/firestore";
-import type { DocumentData } from "firebase/firestore";
-
+import type { User } from "@/types/user-types";
 const initialState = {
-  currentUser: null as null | DocumentData,
+  currentUser: null as null | User,
   isLoading: true,
 };
 type Actions = {
@@ -16,16 +15,14 @@ const useUserStore = create<State & Actions>((set) => ({
   fetchUserInfo: async (uuid) => {
     if (!uuid) return set({ currentUser: null, isLoading: false });
     try {
-      const docRef = doc(db, "user", uuid);
+      const docRef = doc(db, USER_DB, uuid);
       const docSnap = await getDoc(docRef);
-      console.log(docSnap);
       if (docSnap.exists()) {
-        set({ currentUser: docSnap.data(), isLoading: false });
+        set({ currentUser: docSnap.data() as User, isLoading: false });
       } else {
         set({ currentUser: null, isLoading: false });
       }
     } catch (err) {
-      //   console.log(err);
       set({ currentUser: null, isLoading: false });
     }
   },

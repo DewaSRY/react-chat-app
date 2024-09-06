@@ -17,3 +17,6 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const db = getFirestore();
 export const storage = getStorage();
+
+export const USER_DB = "user";
+export const USER_CHAT_DB = "user-chats";

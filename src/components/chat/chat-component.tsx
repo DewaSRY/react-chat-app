@@ -1,8 +1,15 @@
-import { ComponentProps, ComponentRef, PropsWithChildren, useRef } from "react";
+import {
+  ComponentProps,
+  ComponentRef,
+  PropsWithChildren,
+  useEffect,
+  useRef,
+} from "react";
 // import EmojiPicker from "emoji-picker-react";
 import EmojiMenu from "./emoji-menu-component";
 import { Button } from "../ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
+import useChatStore from "@/zustand/user-chat-store";
 interface ChatComponentProps extends ComponentProps<"div">, PropsWithChildren {}
 import MessageComponent from "./message-component";
 import { cn } from "@/lib/utils";
@@ -10,6 +17,12 @@ export default function ChatComponent({
   children,
   ...resProps
 }: ChatComponentProps) {
+  // const { fetchUserInfo } = useChatStore();
+
+  // useEffect(() => {
+  //   fetchUserInfo();
+  // }, []);
+
   const inputRef = useRef<ComponentRef<"input">>(null);
   const endBodyRef = useRef<ComponentRef<"div">>(null);
 

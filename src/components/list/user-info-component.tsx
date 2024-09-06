@@ -5,13 +5,23 @@ import { Ellipsis, Video, Pencil, User } from "lucide-react";
 //   extends ComponentProps<"div">,
 //     PropsWithChildren {}
 
+import useUserStore from "@/zustand/use-user-store";
 export default function UserInfoComponent() {
+  const { currentUser } = useUserStore();
   return (
     <div className="text-white my-4 flex justify-between">
       {/* User  */}
-      <div className="flex gap-4 tex-2xl ">
-        <User />
-        <h2>Jhone Deo</h2>
+      <div className="flex gap-4 tex-2xl w-[30px] h-[30px] ">
+        {currentUser?.avatar !== null ? (
+          <>
+            <img src="/avatar.png" alt="" />
+          </>
+        ) : (
+          // <img src={currentUser.avatar} alt="" />
+          <User />
+        )}
+
+        <h2>{currentUser?.username}</h2>
       </div>
       {/* Icons */}
       <div
