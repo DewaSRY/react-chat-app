@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils";
 import React, { ComponentProps, PropsWithChildren, useState } from "react";
 import { toast } from "react-toastify";
+import { userLogin, userRegister } from "@/firebase/user-utils";
+
 interface LoginComponentProps
   extends ComponentProps<"div">,
     PropsWithChildren {}
@@ -9,6 +11,7 @@ export default function LoginComponent({
   children,
   ...resProps
 }: LoginComponentProps) {
+  const [isSubmited, setIsSubmited] = useState(false);
   const [avatar, setAvatar] = useState({
     file: null as File | null,
     url: "",
@@ -25,10 +28,40 @@ export default function LoginComponent({
     }
   }
 
-  function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("hallo");
+    setIsSubmited(true);
+    const formElement = e.target as HTMLFormElement;
+    const formData = new FormData(formElement);
+
+    try {
+      await userLogin({
+        email: formData.get("email")?.toString() ?? "",
+        password: formData.get("password")?.toString() ?? "",
+      });
+      toast.success("You are login!");
+    } catch (e) {
+      console.log("error");
+    }
+
     toast.warn("hallo");
+  }
+
+  async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formElement = e.target as HTMLFormElement;
+    const formData = new FormData(formElement);
+    try {
+      await userRegister({
+        username: formData.get("username")?.toString() ?? "",
+        email: formData.get("email")?.toString() ?? "",
+        password: formData.get("password")?.toString() ?? "",
+        avatar: avatar.file!,
+      });
+      toast.success("Account created! You can login now!");
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div className="login">
@@ -43,7 +76,8 @@ export default function LoginComponent({
         >
           <input type="text" placeholder="Email" name="email" />
           <input type="password" placeholder="Password" name="password" />
-          <button className="bg-green-500">Login</button>
+
+          <ButtonComponent isSubmited={isSubmited}>Login</ButtonComponent>
         </form>
       </div>
 
@@ -52,6 +86,7 @@ export default function LoginComponent({
       <div className="item">
         <h2 className="text-2xl text-white">Create an Account</h2>
         <form
+          onSubmit={handleRegister}
           className={cn(
             "flex flex-col gap-2 ",
             "[&>input]:p-2 [&>input]:bg-white/80 [&>input]:outline-none [&>input]:border-none"
@@ -76,9 +111,20 @@ export default function LoginComponent({
           <input type="text" placeholder="Username" name="username" />
           <input type="text" placeholder="Email" name="email" />
           <input type="password" placeholder="Password" name="password" />
-          <button className="bg-blue-400"> Sing Up</button>
+          <ButtonComponent isSubmited={isSubmited}>Sing Up</ButtonComponent>
         </form>
       </div>
     </div>
+  );
+}
+
+function ButtonComponent({
+  isSubmited,
+  children,
+}: PropsWithChildren & { isSubmited: boolean }) {
+  return (
+    <button disabled={isSubmited} className="bg-green-500">
+      {isSubmited ? <p>Loading</p> : <> {children}</>}
+    </button>
   );
 }

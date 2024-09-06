@@ -3,14 +3,7 @@ import { Minus, Plus, Search } from "lucide-react";
 import { ComponentProps, PropsWithChildren, useState } from "react";
 import UserItemComponent from "./user-item-component";
 import AddUserComponent from "./add-user-component";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface ChatListComponentProps
   extends ComponentProps<"div">,
