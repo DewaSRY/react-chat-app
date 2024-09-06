@@ -4,7 +4,10 @@ import { ComponentProps, PropsWithChildren, useState } from "react";
 import UserItemComponent from "./user-item-component";
 import AddUserComponent from "./add-user-component";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-
+import useChatStore from "@/zustand/user-chat-store";
+import useUserStore from "@/zustand/use-user-store";
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
+import { db, USER_CHAT_DB, USER_DB } from "@/firebase/utils";
 interface ChatListComponentProps
   extends ComponentProps<"div">,
     PropsWithChildren {}
@@ -14,6 +17,7 @@ export default function ChatListComponent({
   ...resProps
 }: ChatListComponentProps) {
   const [isAdd, setisAdd] = useState(false);
+
   return (
     <div className=" ">
       {/* Search  */}

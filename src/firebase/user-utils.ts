@@ -4,19 +4,22 @@ import {
 } from "firebase/auth";
 
 import { auth, db, USER_DB, USER_CHAT_DB } from "./utils";
+import imgUpload from "./firebase-upload";
 import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
 
 import { UserLogin, UserRegister } from "@/types/user-types";
 import { where } from "firebase/firestore/lite";
 
 export async function userRegister(userRegister: UserRegister) {
-  console.log(userRegister);
+  // console.log(userRegister);
   const userRef = collection(db, "user");
   const q = query(userRef, where("username", "==", userRegister.username));
   const querySnapshot = await getDocs(q);
   if (!querySnapshot.empty) {
     throw Error("username already use");
   }
+
+  const imgUrl = await imgUpload(userRegister.avatar);
 
   const res = await createUserWithEmailAndPassword(
     auth,
@@ -27,7 +30,7 @@ export async function userRegister(userRegister: UserRegister) {
   await setDoc(doc(db, USER_DB, res.user.uid), {
     username: userRegister.username,
     email: userRegister.email,
-    awatar: userRegister.avatar,
+    awatar: imgUrl,
     id: res.user.uid,
     blocked: [],
   });

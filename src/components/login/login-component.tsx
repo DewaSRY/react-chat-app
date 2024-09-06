@@ -42,15 +42,16 @@ export default function LoginComponent({
       toast.success("You are login!");
     } catch (e) {
       console.log("error");
+    } finally {
+      setIsSubmited(false);
     }
-
-    toast.warn("hallo");
   }
 
   async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formElement = e.target as HTMLFormElement;
     const formData = new FormData(formElement);
+    setIsSubmited(true);
     try {
       await userRegister({
         username: formData.get("username")?.toString() ?? "",
@@ -61,6 +62,8 @@ export default function LoginComponent({
       toast.success("Account created! You can login now!");
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsSubmited(false);
     }
   }
   return (

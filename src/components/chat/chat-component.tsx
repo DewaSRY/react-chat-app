@@ -10,6 +10,9 @@ import EmojiMenu from "./emoji-menu-component";
 import { Button } from "../ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import useChatStore from "@/zustand/user-chat-store";
+import useUserStore from "@/zustand/use-user-store";
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
+import { db, USER_CHAT_DB, USER_DB } from "@/firebase/utils";
 interface ChatComponentProps extends ComponentProps<"div">, PropsWithChildren {}
 import MessageComponent from "./message-component";
 import { cn } from "@/lib/utils";

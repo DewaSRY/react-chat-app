@@ -12,14 +12,7 @@ export default function UserInfoComponent() {
     <div className="text-white my-4 flex justify-between">
       {/* User  */}
       <div className="flex gap-4 tex-2xl w-[30px] h-[30px] ">
-        {currentUser?.avatar !== null ? (
-          <>
-            <img src="/avatar.png" alt="" />
-          </>
-        ) : (
-          // <img src={currentUser.avatar} alt="" />
-          <User />
-        )}
+        <img src={currentUser?.avatar || "/avatar.png"} alt="" />
 
         <h2>{currentUser?.username}</h2>
       </div>

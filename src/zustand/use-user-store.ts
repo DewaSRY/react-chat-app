@@ -4,7 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import type { User } from "@/types/user-types";
 const initialState = {
   currentUser: null as null | User,
-  isLoading: true,
+  isLoading: false,
 };
 type Actions = {
   fetchUserInfo: (uuid: string) => Promise<void>;

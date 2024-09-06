@@ -16,7 +16,6 @@ function App() {
       if (user?.uid) {
         fetchUserInfo(user?.uid);
       }
-      console.log(currentUser);
     });
     return () => {
       unSub();
