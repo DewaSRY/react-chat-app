@@ -2,6 +2,15 @@ import { cn } from "@/lib/utils";
 import { Minus, Plus, Search } from "lucide-react";
 import { ComponentProps, PropsWithChildren, useState } from "react";
 import UserItemComponent from "./user-item-component";
+import AddUserComponent from "./add-user-component";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface ChatListComponentProps
   extends ComponentProps<"div">,
@@ -30,15 +39,23 @@ export default function ChatListComponent({
             )}
             type="text"
           />
-          <div
-            onClick={setisAdd.bind(null, !isAdd)}
-            className={cn(
-              "[&>svg]:active:translate-y-[10%] ",
-              "text-lg   cursor-pointer duration-200 "
-            )}
-          >
-            {isAdd ? <Plus /> : <Minus />}
-          </div>
+
+          <Dialog>
+            <DialogTrigger>
+              <div
+                onClick={setisAdd.bind(null, !isAdd)}
+                className={cn(
+                  "[&>svg]:active:translate-y-[10%] ",
+                  "text-lg   cursor-pointer duration-200 "
+                )}
+              >
+                {isAdd ? <Plus /> : <Minus />}
+              </div>
+            </DialogTrigger>
+            <DialogContent>
+              <AddUserComponent />
+            </DialogContent>
+          </Dialog>
         </form>
       </div>
       <div className="h-[70vh] overflow-y-scroll no-scrollbar ">
