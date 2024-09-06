@@ -8,9 +8,9 @@ type Actions = {
   decrement: (qty: number) => void;
 };
 type State = typeof initialState;
-const useUserStore = create<State & Actions>((set) => ({
+const useChatStore = create<State & Actions>((set) => ({
   ...initialState,
   increment: (qty: number) => set((state) => ({ count: state.count + qty })),
   decrement: (qty: number) => set((state) => ({ count: state.count - qty })),
 }));
-export default useUserStore;
+export default useChatStore;
