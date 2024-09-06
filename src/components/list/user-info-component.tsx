@@ -1,4 +1,5 @@
 // import { ComponentProps, PropsWithChildren } from "react";
+import { cn } from "@/lib/utils";
 import { Ellipsis, Video, Pencil, User } from "lucide-react";
 // interface UserInfoComponentProps
 //   extends ComponentProps<"div">,
@@ -6,17 +7,22 @@ import { Ellipsis, Video, Pencil, User } from "lucide-react";
 
 export default function UserInfoComponent() {
   return (
-    <div>
+    <div className="text-white my-4 flex justify-between">
       {/* User  */}
-      <div>
+      <div className="flex gap-4 tex-2xl ">
         <User />
         <h2>Jhone Deo</h2>
       </div>
       {/* Icons */}
-      <div>
-        <Ellipsis />
+      <div
+        className={cn(
+          "flex justify-between items-end text-sm gap-2",
+          "[&>svg]:font-sm"
+        )}
+      >
         <Video />
         <Pencil />
+        <Ellipsis />
       </div>
     </div>
   );

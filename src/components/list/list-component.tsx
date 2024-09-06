@@ -6,7 +6,7 @@ import ChatListComponent from "./chat-list-component";
 
 export default function ListComponent() {
   return (
-    <div>
+    <div className="max-w-[300px] bg-transparent h-max text-white">
       <UserInfoComponent />
       <ChatListComponent />
     </div>

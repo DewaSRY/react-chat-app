@@ -6,7 +6,7 @@ function App() {
   return (
     <div
       className={cn(
-        "my-[10vh] mx-auto py-8 px-4 w-[90vh] ",
+        "my-[5vh] mx-auto py-8 px-4 w-[90vw] h-[90vh] ",
         "bg-gray-700/80 rounded-2xl backdrop-blur-sm saturate-[180%] "
       )}
     >
