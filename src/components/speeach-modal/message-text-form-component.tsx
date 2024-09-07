@@ -1,4 +1,4 @@
-import { Button, Input, Textarea } from "@mantine/core";
+import { Button, Textarea } from "@mantine/core";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 
 import React, {

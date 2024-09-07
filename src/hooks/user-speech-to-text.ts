@@ -32,10 +32,10 @@ export default function useSpeekToText(callback = (_text: string) => {}) {
       callback(text);
     };
 
-    recognitionRef.current.onerror = (event) => {
+    recognitionRef.current.onerror = () => {
       //   console.log("get an error");
     };
-    recognitionRef.current.onend = (event) => {
+    recognitionRef.current.onend = () => {
       setIsListening(false);
     };
 
