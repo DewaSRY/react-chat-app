@@ -1,4 +1,4 @@
-import { ComponentRef, useRef } from "react";
+import { ComponentRef, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 import MessageComponent from "./message-component";
@@ -8,11 +8,13 @@ export default function MessageThredComponent() {
   const endBodyRef = useRef<ComponentRef<"div">>(null);
 
   const { messagesList } = userChatStore();
-
+  useEffect(() => {
+    endBodyRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messagesList.length]);
   return (
     <div
       className={cn(
-        "flex-1 h-[70vh]  no-scrollbar ",
+        "flex-1 h-[80vh]  no-scrollbar ",
         "flex overflow-y-scroll flex-col gap-2"
       )}
     >

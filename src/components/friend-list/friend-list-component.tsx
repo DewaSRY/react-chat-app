@@ -14,7 +14,7 @@ export default function FriendListComponent({
   const { itemList } = useFriendsItems();
 
   return (
-    <div className="h-[80vh] overflow-y-scroll no-scrollbar ">
+    <div className="h-[80vh] overflow-y-scroll no-scrollbar " {...resProps}>
       <div className="overflow-y-auto max-h-full ">
         {itemList.length > 0 && (
           <>
