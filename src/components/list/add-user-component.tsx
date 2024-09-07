@@ -1,28 +1,11 @@
-import { db, USER_DB, CHAT_DB, USER_CHAT_DB } from "@/firebase/utils";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-// import { User } from "firebase/auth";
-import {
-  arrayUnion,
-  collection,
-  doc,
-  getDocs,
-  query,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { where } from "firebase/firestore/lite";
-import React, { ComponentProps, PropsWithChildren, useState } from "react";
-import type { User } from "@/types/user-types";
 import useUserStore from "@/zustand/use-user-store";
-interface AddUserComponentProps
-  extends ComponentProps<"div">,
-    PropsWithChildren {}
+import { addUserChat } from "@/firebase/chat-utils";
+import { searchUser } from "@/firebase/user-utils";
+import type { User } from "@/types/user-types";
 
-export default function AddUserComponent({
-  children,
-  ...resProps
-}: AddUserComponentProps) {
+export default function AddUserComponent() {
   const [user, setUser] = useState<User | null>(null);
   const { currentUser } = useUserStore();
 
@@ -33,56 +16,25 @@ export default function AddUserComponent({
     const formData = new FormData(formElement);
     const userName = formData.get("username")?.toString() ?? "";
     try {
-      const userRef = collection(db, USER_DB);
-      const q = query(userRef, where("username", "==", userName));
-      const querySnapShot = await getDocs(q);
-      if (!querySnapShot.empty && querySnapShot.docs) {
-        const data = querySnapShot.docs[0].data() as User;
-        setUser(data);
-      }
+      const getUser = await searchUser(userName);
+      setUser(getUser);
     } catch (e) {
       console.log(e);
     }
   }
 
-  const handleAdd = async () => {
-    const chatRef = collection(db, CHAT_DB);
-    const userChatsRef = collection(db, USER_CHAT_DB);
-
+  async function handleAddChat() {
     try {
-      const newChatRef = doc(chatRef);
-
-      await setDoc(newChatRef, {
-        createdAt: serverTimestamp(),
-        messages: [],
-      });
-
-      await updateDoc(doc(userChatsRef, user?.id ?? ""), {
-        chats: arrayUnion({
-          chatId: newChatRef.id,
-          lastMessage: "",
-          receiverId: currentUser?.id,
-          updatedAt: Date.now(),
-        }),
-      });
-
-      await updateDoc(doc(userChatsRef, currentUser?.id), {
-        chats: arrayUnion({
-          chatId: newChatRef.id,
-          lastMessage: "",
-          receiverId: user?.id ?? "",
-          updatedAt: Date.now(),
-        }),
-      });
+      addUserChat(currentUser?.id ?? "", user?.id ?? "");
     } catch (err) {
       console.log(err);
     }
-  };
+  }
 
   return (
     <div className={cn(" top-4 right-5  ", "bg-white/10 px-4 py-6 rounded-sm")}>
       <form onSubmit={handleSearch}>
-        <input type="text" placeholder="Username" name="username" />
+        <input type="text" placeholder="searc user " name="username" />
         <button>Search</button>
       </form>
       {user && (
@@ -93,8 +45,8 @@ export default function AddUserComponent({
             </div>
             <span>{user.username}</span>
           </div>
-          <button onClick={handleAdd} className="bg-green-500 px-6 py-">
-            Add User
+          <button onClick={handleAddChat} className="bg-green-500 px-6 py-">
+            Start Conversation
           </button>
         </div>
       )}

@@ -1,3 +1,4 @@
+import { User } from "./user-types";
 export interface SendMesage {
   image?: File;
   chatId: string;
@@ -29,4 +30,12 @@ export interface ChatItem {
 
 export interface UserChat {
   chats: ChatItem[];
+}
+
+export interface MessageItem {
+  user: User;
+  chatId: string;
+  lastMessage: string;
+  receiverId: string;
+  updatedAt: number;
 }

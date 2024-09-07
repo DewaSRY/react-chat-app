@@ -9,6 +9,7 @@ import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
 
 import { UserLogin, UserRegister } from "@/types/user-types";
 import { where } from "firebase/firestore/lite";
+import type { User } from "@/types/user-types";
 
 export async function userRegister(userRegister: UserRegister) {
   // console.log(userRegister);
@@ -42,4 +43,13 @@ export async function userRegister(userRegister: UserRegister) {
 
 export async function userLogin(userLogin: UserLogin) {
   await signInWithEmailAndPassword(auth, userLogin.email, userLogin.password);
+}
+export async function searchUser(username: string) {
+  const userRef = collection(db, USER_DB);
+  const q = query(userRef, where("username", "==", username));
+  const querySnapShot = await getDocs(q);
+  if (!querySnapShot.empty && querySnapShot.docs) {
+    return querySnapShot.docs[0].data() as User;
+  }
+  return null;
 }
