@@ -6,7 +6,7 @@ export default function useDebounce(callback: (value: string) => void) {
   useEffect(() => {
     const timeId = setTimeout(() => {
       callback(v);
-    }, 500);
+    }, 100);
 
     return () => {
       clearTimeout(timeId);

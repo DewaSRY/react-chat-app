@@ -2,6 +2,9 @@ import { cn } from "@/lib/utils";
 import React, { ComponentProps, PropsWithChildren, useState } from "react";
 import { toast } from "react-toastify";
 import { userRegister } from "@/firebase/user-utils";
+import { useForm } from "react-hook-form";
+import { Input, Text } from "@mantine/core";
+
 import FormButtonComponent from "./form-button-component";
 
 interface UserRegisterComponentProps
@@ -12,6 +15,17 @@ interface UserRegisterComponentProps
   submited: boolean;
 }
 
+// interface FormValues {
+//   image: File;
+//   username: string;
+//   email: string;
+//   password: string;
+// }
+
+// function useFormValidation() {
+//   return useForm<FormValues>({});
+// }
+
 export default function UserRegisterComponent({
   children,
   onStart,
@@ -19,6 +33,7 @@ export default function UserRegisterComponent({
   submited,
   ...resProps
 }: UserRegisterComponentProps) {
+  // const { handleSubmit } = useFormValidation();
   const [avatar, setAvatar] = useState({
     file: null as File | null,
     url: "",
@@ -59,11 +74,11 @@ export default function UserRegisterComponent({
       <form
         onSubmit={handleRegister}
         className={cn(
-          "flex flex-col gap-2 max-w-[600px] text-gray-800",
+          "flex flex-col gap-2  text-gray-800 mx-auto",
           "[&>input]:p-2 [&>input]:bg-white/80 [&>input]:outline-none [&>input]:border-none"
         )}
       >
-        <label htmlFor="file" className="flex items-center  gap-4">
+        <label htmlFor="file" className="flex items-center  gap-4 my-2">
           <div className="w-[50px] h-[50px]">
             <img
               className="aspect-square"
@@ -73,22 +88,47 @@ export default function UserRegisterComponent({
           </div>
           <span className="text-white">Upload an image</span>
         </label>
-        <input
+        <Input
           type="file"
           id="file"
-          style={{ display: "none" }}
           onChange={handleAvatar}
           required
+          className="my-2 py-2"
         />
-        <input required type="text" placeholder="Username" name="username" />
-        <input required type="text" placeholder="Email" name="email" />
-        <input
-          required
-          type="password"
-          placeholder="Password"
-          name="password"
-          defaultValue="April10Dua004"
-        />
+        <label htmlFor="username">
+          <span className="text-gray-100">User Name</span>
+          <Input
+            required
+            type="text"
+            placeholder="Username"
+            name="username"
+            id="username"
+          />
+        </label>
+
+        <label htmlFor="email">
+          <span className="text-gray-100">Email</span>
+          <Input
+            required
+            type="text"
+            placeholder="Email"
+            name="email"
+            id="email"
+          />
+        </label>
+        <label htmlFor="password">
+          <span className="text-gray-100">Password</span>
+          <Input
+            required
+            type="password"
+            placeholder="Password"
+            name="password"
+            id="password"
+            defaultValue="April10Dua004"
+            minLength={8}
+          />
+        </label>
+
         <FormButtonComponent isSubmited={submited}>Sing Up</FormButtonComponent>
       </form>
     </div>

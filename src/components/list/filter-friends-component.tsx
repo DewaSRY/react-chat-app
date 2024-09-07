@@ -1,15 +1,12 @@
 import { cn } from "@/lib/utils";
-import { Plus, Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 import useFriendsItems from "@/zustand/use-friends-items";
 import useDebounce from "@/hooks/use-debounce";
-import useUsersModal from "@/zustand/use-users-modal";
 
 export default function FilterFriendsComponent() {
   const { searchItems } = useFriendsItems();
   const { v, handleVChange } = useDebounce(searchItems);
-
-  const { handleOpen } = useUsersModal();
 
   return (
     <form
@@ -25,16 +22,6 @@ export default function FilterFriendsComponent() {
         value={v}
         onChange={handleVChange}
       />
-
-      <div
-        onClick={handleOpen}
-        className={cn(
-          "[&>svg]:active:translate-y-[10%] ",
-          "text-lg cursor-pointer duration-200 "
-        )}
-      >
-        <Plus />
-      </div>
     </form>
   );
 }

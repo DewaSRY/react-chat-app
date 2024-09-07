@@ -8,6 +8,7 @@ import { getMessageItems } from "@/firebase/chat-utils";
 import useFriendsItems from "@/zustand/use-friends-items";
 import FilterFriendsComponent from "./filter-friends-component";
 import FriendListComponent from "@/components/friend-list/friend-list-component";
+import AddFriendsComponent from "./add-friends-component";
 export default function ListComponent() {
   const { setMessageItem } = useFriendsItems();
 
@@ -30,6 +31,7 @@ export default function ListComponent() {
   return (
     <div className=" ">
       <FilterFriendsComponent />
+      <AddFriendsComponent />
       <FriendListComponent />
     </div>
   );

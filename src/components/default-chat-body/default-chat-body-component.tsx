@@ -13,13 +13,7 @@ export default function DefaultChatBodyComponent() {
       <DotsComponent className={classes.dots} style={{ right: 0, top: 60 }} />
 
       <div className={classes.inner}>
-        <Title className={classes.title}>
-          Chat APP{" "}
-          <Text component="span" className={classes.highlight} inherit>
-            code reviews
-          </Text>{" "}
-          for any stack
-        </Title>
+        <Title className={classes.title}>React Chat APP </Title>
 
         <Container p={0} size={600}>
           <Text size="lg" c="dimmed" className={classes.description}>
@@ -33,14 +27,11 @@ export default function DefaultChatBodyComponent() {
           <Button
             onClick={handleOpen}
             className={classes.control}
-            size="lg"
+            size="xl"
             variant="default"
             color="gray"
           >
             FInd Someoen to Talk
-          </Button>
-          <Button className={classes.control} size="lg">
-            Purchase a license
           </Button>
         </div>
       </div>

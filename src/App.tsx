@@ -1,6 +1,5 @@
 import ListComponent from "./components/list/list-component";
 import ChatComponent from "./components/chat/chat-component";
-import LoginComponent from "./components/login/login-component";
 import UserInfoComponent from "./components/user-info/user-info-component";
 import NotificationComponent from "./components/notification/notification-component";
 import { onAuthStateChanged } from "firebase/auth";
@@ -8,6 +7,7 @@ import useUserStore from "@/zustand/use-user-store";
 import { useEffect } from "react";
 import { auth } from "./firebase/utils";
 import { AppShell, Burger } from "@mantine/core";
+import AuthComponent from "./components/auth/auth-component";
 // import { useDisclosure } from "@mantine/hooks";
 import UsersModalComponent from "@/components/users-modal/users-modal-component";
 import useAppShell from "./zustand/use-app-shell";
@@ -29,34 +29,36 @@ function App() {
   if (isLoading) return <div className="loading">Loading...</div>;
   return (
     <>
-      <div className="fixed top-2 right-1 cursor-pointer z-20">
-        <Burger
-          opened={opened}
-          onClick={handleToggle}
-          hiddenFrom="sm"
-          size="xl"
-        />
-      </div>
       {currentUser ? (
-        <AppShell
-          navbar={{
-            width: 300,
-            breakpoint: "sm",
-            collapsed: { mobile: !opened },
-          }}
-          padding="md"
-        >
-          <AppShell.Navbar className="" p="md">
-            <UserInfoComponent />
-            <ListComponent />
-          </AppShell.Navbar>
+        <>
+          <div className="fixed top-2 right-1 cursor-pointer z-20">
+            <Burger
+              opened={opened}
+              onClick={handleToggle}
+              hiddenFrom="sm"
+              size="xl"
+            />
+          </div>
+          <AppShell
+            navbar={{
+              width: 300,
+              breakpoint: "sm",
+              collapsed: { mobile: !opened },
+            }}
+            padding="md"
+          >
+            <AppShell.Navbar className="" p="md">
+              <UserInfoComponent />
+              <ListComponent />
+            </AppShell.Navbar>
 
-          <AppShell.Main>
-            <ChatComponent />
-          </AppShell.Main>
-        </AppShell>
+            <AppShell.Main>
+              <ChatComponent />
+            </AppShell.Main>
+          </AppShell>
+        </>
       ) : (
-        <LoginComponent />
+        <AuthComponent />
       )}
       <NotificationComponent />
       <UsersModalComponent />

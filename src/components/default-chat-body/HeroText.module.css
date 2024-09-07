@@ -1,8 +1,8 @@
 .wrapper {
   position: relative;
-  padding-top: rem(120px);
+  padding-top: rem(250px);
   padding-bottom: rem(80px);
-
+  top: 6rem;
   @media (max-width: $mantine-breakpoint-sm) {
     padding-top: rem(80px);
     padding-bottom: rem(60px);
@@ -44,7 +44,7 @@
 }
 
 .highlight {
-  color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-blue-4));
+  color: light-dark(#573fdf, #1753bb);
 }
 
 .description {

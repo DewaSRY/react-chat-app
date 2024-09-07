@@ -3,6 +3,7 @@ import React, { ComponentProps, PropsWithChildren } from "react";
 import { toast } from "react-toastify";
 import { userLogin } from "@/firebase/user-utils";
 import FormButtonComponent from "./form-button-component";
+import { Input } from "@mantine/core";
 interface UserLoginComponentProps
   extends ComponentProps<"div">,
     PropsWithChildren {
@@ -44,17 +45,32 @@ export default function UserLoginComponent({
       <form
         onSubmit={handleLogin}
         className={cn(
-          "flex flex-col gap-2 max-w-[600px] text-gray-800",
+          "flex flex-col gap-2  text-gray-800",
           "[&>input]:p-2 [&>input]:bg-white/80 [&>input]:outline-none [&>input]:border-none"
         )}
       >
-        <input type="email" placeholder="Email" name="email" />
-        <input
-          defaultValue="April10Dua004"
-          type="password"
-          placeholder="Password"
-          name="password"
-        />
+        <label htmlFor="email">
+          <span className="text-gray-100">Email</span>
+          <Input
+            required
+            type="email"
+            placeholder="Email"
+            name="email"
+            id="email"
+          />
+        </label>
+        <label htmlFor="password">
+          <span className="text-gray-100">Password</span>
+          <Input
+            required
+            defaultValue="April10Dua004"
+            type="password"
+            placeholder="Password"
+            name="password"
+            id="password"
+            minLength={8}
+          />
+        </label>
 
         <FormButtonComponent isSubmited={submited}>Login</FormButtonComponent>
       </form>
