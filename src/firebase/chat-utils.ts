@@ -3,10 +3,8 @@ import {
   arrayUnion,
   doc,
   getDoc,
-  onSnapshot,
   updateDoc,
   collection,
-  serverTimestamp,
   setDoc,
 } from "firebase/firestore";
 
@@ -29,7 +27,7 @@ export async function sendMessaage(sendMessage: SendMesage) {
   }
 
   try {
-    await updateDoc(doc(db, USER_CHAT_DB, chatId), {
+    await updateDoc(doc(db, CHAT_DB, chatId), {
       messages: arrayUnion({
         senderId: senderId,
         text,

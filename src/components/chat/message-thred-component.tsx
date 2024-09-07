@@ -16,7 +16,7 @@ export default function MessageThredComponent() {
         "flex overflow-y-scroll flex-col gap-2"
       )}
     >
-      {messagesList.length && (
+      {messagesList.length > 0 && (
         <>
           {messagesList.map((m, id) => (
             <React.Fragment key={id}>

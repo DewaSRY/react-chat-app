@@ -49,7 +49,12 @@ export default function UserLoginComponent({
         )}
       >
         <input type="email" placeholder="Email" name="email" />
-        <input type="password" placeholder="Password" name="password" />
+        <input
+          defaultValue="April10Dua004"
+          type="password"
+          placeholder="Password"
+          name="password"
+        />
 
         <FormButtonComponent isSubmited={submited}>Login</FormButtonComponent>
       </form>

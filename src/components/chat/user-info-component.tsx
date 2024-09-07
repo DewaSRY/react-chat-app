@@ -15,11 +15,11 @@ export default function UserInfoComponent({
       {...resProps}
     >
       <div className="w-[30px] h-[30px]">
-        <img src={user?.avatar} alt="" />
+        <img src={user?.avatar ?? "/avatar.png"} alt="" />
       </div>
       <div>
         <span className="text-lg">{user?.username}</span>
-        <p className="text-sm"></p>
+        {/* <p className="text-sm"></p> */}
       </div>
     </div>
   );

@@ -5,14 +5,7 @@ import {
 
 import { auth, db, USER_DB, USER_CHAT_DB } from "./utils";
 import imgUpload from "./firebase-upload";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  setDoc,
-} from "firebase/firestore";
+import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
 
 import { UserLogin, UserRegister } from "@/types/user-types";
 import { where } from "firebase/firestore/lite";

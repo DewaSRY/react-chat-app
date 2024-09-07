@@ -87,6 +87,7 @@ export default function UserRegisterComponent({
           type="password"
           placeholder="Password"
           name="password"
+          defaultValue="April10Dua004"
         />
         <FormButtonComponent isSubmited={submited}>Sing Up</FormButtonComponent>
       </form>
