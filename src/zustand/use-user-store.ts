@@ -3,7 +3,13 @@ import { db, USER_DB } from "@/firebase/utils";
 import { doc, getDoc } from "firebase/firestore";
 import type { User } from "@/types/user-types";
 const initialState = {
-  currentUser: null as null | User,
+  currentUser: {
+    id: Math.random().toString(),
+    username: "",
+    blocked: [],
+    email: "",
+    avatar: "",
+  } as null | User,
   isLoading: false,
 };
 type Actions = {

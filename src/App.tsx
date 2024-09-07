@@ -34,7 +34,7 @@ function App() {
         <div className="flex gap-1 ">
           <ListComponent />
           <ChatComponent />
-          <DetailComponent />
+          {/* <DetailComponent /> */}
         </div>
       ) : (
         <LoginComponent />

@@ -22,8 +22,8 @@ export default function EmojiMenuComponent({
   }
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="p-2  text-2xl  ">
-        <button className="active:translate-y-[10%] duration-150">😎</button>
+      <DropdownMenuTrigger className="p-2  text-2xl active:translate-y-[10%] duration-150  ">
+        <span className="">😎</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <EmojiPicker onEmojiClick={handleEmojiClick} />

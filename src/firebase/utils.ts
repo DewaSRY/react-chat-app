@@ -20,3 +20,4 @@ export const storage = getStorage();
 
 export const USER_DB = "user";
 export const USER_CHAT_DB = "user-chats";
+export const CHAT_DB = "chat";

@@ -11,7 +11,7 @@ export interface UserLogin {
 }
 
 export interface User {
-  avatar: null | string;
+  avatar?: string;
   blocked: string[];
   email: string;
   id: string;
