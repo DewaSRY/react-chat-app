@@ -1,14 +1,36 @@
-// import { ComponentProps, PropsWithChildren } from "react";
-import UserInfoComponent from "./user-info-component";
-import ChatListComponent from "./chat-list-component";
+import { useEffect } from "react";
 
-// interface ListComponentProps extends ComponentProps<"div">, PropsWithChildren {}
-
+import useUserStore from "@/zustand/use-user-store";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db, USER_CHAT_DB } from "@/firebase/utils";
+import type { UserChat } from "@/types/chat-types";
+import { getMessageItems } from "@/firebase/chat-utils";
+import useFriendsItems from "@/zustand/use-friends-items";
+import FilterFriendsComponent from "./filter-friends-component";
+import FriendListComponent from "@/components/friend-list/friend-list-component";
 export default function ListComponent() {
+  const { setMessageItem } = useFriendsItems();
+
+  const { currentUser } = useUserStore();
+  useEffect(() => {
+    if (!currentUser) return;
+    const unSub = onSnapshot(
+      doc(db, USER_CHAT_DB, currentUser?.id),
+      async (res) => {
+        if (!res.data()) return;
+        const userChat = res.data() as UserChat;
+        const chatData = await getMessageItems(userChat);
+        setMessageItem(chatData);
+      }
+    );
+    return () => {
+      unSub();
+    };
+  }, [currentUser?.id]);
   return (
-    <div className="max-w-[300px] bg-transparent h-max text-white ">
-      <UserInfoComponent />
-      <ChatListComponent />
+    <div className=" ">
+      <FilterFriendsComponent />
+      <FriendListComponent />
     </div>
   );
 }

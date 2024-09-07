@@ -1,18 +1,20 @@
 import ListComponent from "./components/list/list-component";
 import ChatComponent from "./components/chat/chat-component";
 import LoginComponent from "./components/login/login-component";
+import UserInfoComponent from "./components/user-info/user-info-component";
 import NotificationComponent from "./components/notification/notification-component";
 import { onAuthStateChanged } from "firebase/auth";
 import useUserStore from "@/zustand/use-user-store";
 import { useEffect } from "react";
 import { auth } from "./firebase/utils";
 import { AppShell, Burger } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+// import { useDisclosure } from "@mantine/hooks";
 import UsersModalComponent from "@/components/users-modal/users-modal-component";
+import useAppShell from "./zustand/use-app-shell";
 
 function App() {
   const { currentUser, fetchUserInfo, isLoading } = useUserStore();
-  const [opened, { toggle }] = useDisclosure(currentUser === null);
+  const { opened, handleToggle } = useAppShell();
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
@@ -27,36 +29,35 @@ function App() {
   if (isLoading) return <div className="loading">Loading...</div>;
   return (
     <>
-      <AppShell
-        header={{ height: 60 }}
-        navbar={{
-          width: 300,
-          breakpoint: "sm",
-          collapsed: { mobile: !opened },
-        }}
-        padding="md"
-      >
-        <AppShell.Header>
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          <div>Logo</div>
-        </AppShell.Header>
-
-        {currentUser && (
+      <div className="fixed top-2 right-1 cursor-pointer z-20">
+        <Burger
+          opened={opened}
+          onClick={handleToggle}
+          hiddenFrom="sm"
+          size="xl"
+        />
+      </div>
+      {currentUser ? (
+        <AppShell
+          navbar={{
+            width: 300,
+            breakpoint: "sm",
+            collapsed: { mobile: !opened },
+          }}
+          padding="md"
+        >
           <AppShell.Navbar className="" p="md">
+            <UserInfoComponent />
             <ListComponent />
           </AppShell.Navbar>
-        )}
 
-        <AppShell.Main>
-          {currentUser?.id.length ? (
-            <>
-              <ChatComponent />
-            </>
-          ) : (
-            <LoginComponent />
-          )}
-        </AppShell.Main>
-      </AppShell>
+          <AppShell.Main>
+            <ChatComponent />
+          </AppShell.Main>
+        </AppShell>
+      ) : (
+        <LoginComponent />
+      )}
       <NotificationComponent />
       <UsersModalComponent />
     </>

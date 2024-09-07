@@ -1,4 +1,4 @@
-import React, { ComponentRef, useRef } from "react";
+import { ComponentRef, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 import MessageComponent from "./message-component";

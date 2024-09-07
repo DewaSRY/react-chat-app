@@ -1,22 +1,15 @@
-import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Minus, Plus, Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 
-import AddUserComponent from "./add-user-component";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import useFriendsItems from "@/zustand/use-friends-items";
 import useDebounce from "@/hooks/use-debounce";
+import useUsersModal from "@/zustand/use-users-modal";
 
 export default function FilterFriendsComponent() {
-  const [isAdd, setisAdd] = useState(false);
-
   const { searchItems } = useFriendsItems();
   const { v, handleVChange } = useDebounce(searchItems);
+
+  const { handleOpen } = useUsersModal();
 
   return (
     <form
@@ -33,23 +26,15 @@ export default function FilterFriendsComponent() {
         onChange={handleVChange}
       />
 
-      <Dialog>
-        <DialogTrigger>
-          <div
-            onClick={setisAdd.bind(null, !isAdd)}
-            className={cn(
-              "[&>svg]:active:translate-y-[10%] ",
-              "text-lg   cursor-pointer duration-200 "
-            )}
-          >
-            {isAdd ? <Plus /> : <Minus />}
-          </div>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogTitle>Someone To Tallk</DialogTitle>
-          <AddUserComponent />
-        </DialogContent>
-      </Dialog>
+      <div
+        onClick={handleOpen}
+        className={cn(
+          "[&>svg]:active:translate-y-[10%] ",
+          "text-lg cursor-pointer duration-200 "
+        )}
+      >
+        <Plus />
+      </div>
     </form>
   );
 }
