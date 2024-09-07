@@ -5,7 +5,14 @@ import {
 
 import { auth, db, USER_DB, USER_CHAT_DB } from "./utils";
 import imgUpload from "./firebase-upload";
-import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+} from "firebase/firestore";
 
 import { UserLogin, UserRegister } from "@/types/user-types";
 import { where } from "firebase/firestore/lite";
@@ -52,7 +59,29 @@ export async function searchUser(username: string) {
   const q = query(userRef, where("username", "==", username));
   const querySnapShot = await getDocs(q);
   if (!querySnapShot.empty && querySnapShot.docs) {
+    console.log(
+      "query search",
+      querySnapShot.docs.map((d) => d.data())
+    );
     return querySnapShot.docs[0].data() as User;
   }
+
   return null;
+}
+
+export async function getAllUser(excludeUser: User) {
+  const colRef = collection(db, USER_DB);
+  let userList: User[] = [];
+  const querySnapshot = await getDocs(colRef);
+
+  if (!querySnapshot.empty) {
+    querySnapshot.forEach((doc) => {
+      const data = doc.data() as User;
+      if (data.id !== excludeUser.id) {
+        userList.push(data);
+      }
+    });
+  }
+
+  return userList;
 }

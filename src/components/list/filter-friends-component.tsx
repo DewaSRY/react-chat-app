@@ -46,7 +46,7 @@ export default function FilterFriendsComponent() {
           </div>
         </DialogTrigger>
         <DialogContent>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>Someone To Tallk</DialogTitle>
           <AddUserComponent />
         </DialogContent>
       </Dialog>
