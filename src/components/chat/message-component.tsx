@@ -1,6 +1,8 @@
 import { ComponentProps, PropsWithChildren } from "react";
 import { format } from "timeago.js";
 import type { Messages } from "@/types/chat-types";
+import { cn } from "@/lib/utils";
+import useUserStore from "@/zustand/use-user-store";
 interface MessageComponentProps
   extends ComponentProps<"div">,
     PropsWithChildren {
@@ -12,10 +14,24 @@ export default function MessageComponent({
   message,
   ...resProps
 }: MessageComponentProps) {
+  const { currentUser } = useUserStore();
   return (
-    <div className="px-2 py-4 flex w-full " {...resProps}>
+    <div
+      className={cn(
+        "px-2 py-4 max-w-[330px] ",
+        currentUser?.id === message.senderId && " self-end"
+      )}
+      {...resProps}
+    >
       <div className="">
-        <p className=" self-end w-[400px] p-2 bg-blue-400/30 rounded-md">
+        <p
+          className={cn(
+            " p-2  rounded-md",
+            currentUser?.id === message.senderId
+              ? " bg-blue-400/30"
+              : "bg-transparent "
+          )}
+        >
           {message.text}
         </p>
         <span className="text-sm text-gray-400">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Tabs, rem } from "@mantine/core";
+import { Tabs } from "@mantine/core";
 
 import UserLoginComponent from "./user-login-component";
 import UserRegisterComponent from "./user-register-component";

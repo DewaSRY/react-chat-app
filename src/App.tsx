@@ -1,7 +1,5 @@
-import { cn } from "./lib/utils";
 import ListComponent from "./components/list/list-component";
 import ChatComponent from "./components/chat/chat-component";
-import DetailComponent from "./components/detail/detail-component";
 import LoginComponent from "./components/login/login-component";
 import NotificationComponent from "./components/notification/notification-component";
 import { onAuthStateChanged } from "firebase/auth";
@@ -10,6 +8,7 @@ import { useEffect } from "react";
 import { auth } from "./firebase/utils";
 import { AppShell, Burger } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import UsersModalComponent from "@/components/users-modal/users-modal-component";
 
 function App() {
   const { currentUser, fetchUserInfo, isLoading } = useUserStore();
@@ -59,6 +58,7 @@ function App() {
         </AppShell.Main>
       </AppShell>
       <NotificationComponent />
+      <UsersModalComponent />
     </>
   );
 }

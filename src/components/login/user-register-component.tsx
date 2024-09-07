@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import React, { ComponentProps, PropsWithChildren, useState } from "react";
 import { toast } from "react-toastify";
-import { userLogin, userRegister } from "@/firebase/user-utils";
+import { userRegister } from "@/firebase/user-utils";
 import FormButtonComponent from "./form-button-component";
 
 interface UserRegisterComponentProps
@@ -54,7 +54,7 @@ export default function UserRegisterComponent({
     }
   }
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full" {...resProps}>
       <h2 className="text-2xl my-10 text-white">Create an Account</h2>
       <form
         onSubmit={handleRegister}

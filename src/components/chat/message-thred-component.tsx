@@ -19,9 +19,7 @@ export default function MessageThredComponent() {
       {messagesList.length > 0 && (
         <>
           {messagesList.map((m, id) => (
-            <React.Fragment key={id}>
-              <MessageComponent message={m} />
-            </React.Fragment>
+            <MessageComponent key={id} message={m} />
           ))}
         </>
       )}

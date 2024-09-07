@@ -1,7 +1,7 @@
 import { ComponentProps, PropsWithChildren } from "react";
 
 import useChatStore from "@/zustand/user-chat-store";
-
+import DefaultChatBodyComponent from "../default-chat-body/default-chat-body-component";
 interface ChatComponentProps extends ComponentProps<"div">, PropsWithChildren {}
 import { cn } from "@/lib/utils";
 import ChatBodyComponent from "./chat-body-component";
@@ -12,8 +12,10 @@ export default function ChatComponent({
   const { user } = useChatStore();
 
   return (
-    <div className={cn("text-white flex flex-col h-[80vh]")} {...resProps}>
-      {user ? <ChatBodyComponent /> : <>no user selected</>}
-    </div>
+    <>
+      <div className={cn("text-white flex flex-col h-[80vh]")} {...resProps}>
+        {user ? <ChatBodyComponent /> : <DefaultChatBodyComponent />}
+      </div>
+    </>
   );
 }

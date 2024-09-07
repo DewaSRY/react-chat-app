@@ -39,7 +39,7 @@ export default function UserLoginComponent({
   }
 
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-full " {...resProps}>
       <h2 className="text-2xl my-10 text-white">Welcome back,</h2>
       <form
         onSubmit={handleLogin}

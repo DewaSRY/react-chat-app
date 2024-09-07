@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { ComponentProps, PropsWithChildren, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import useUserStore from "@/zustand/use-user-store";
 import { addUserChat } from "@/firebase/chat-utils";
 import { getAllUser } from "@/firebase/user-utils";
 import type { User } from "@/types/user-types";
+interface UsersListComponentProps
+  extends ComponentProps<"div">,
+    PropsWithChildren {}
 
-export default function AddUserComponent() {
+export default function UsersListComponent({
+  children,
+  ...resProps
+}: UsersListComponentProps) {
   const [users, setUsers] = useState<User[]>([]);
   const { currentUser } = useUserStore();
 
@@ -22,7 +28,7 @@ export default function AddUserComponent() {
   }, []);
 
   return (
-    <div className={cn("  ", " px-4 py-6 rounded-sm")}>
+    <div className={cn("  ", " px-4 py-6 rounded-sm")} {...resProps}>
       {users.length && (
         <>
           {users.map((u, id) => (
