@@ -3,15 +3,17 @@ import { Ellipsis } from "lucide-react";
 import { Burger } from "@mantine/core";
 import useAppShell from "@/zustand/use-app-shell";
 import useUserStore from "@/zustand/use-user-store";
+import useUsersSetting from "@/zustand/use-users-setting";
 export default function UserInfoComponent() {
-  const { currentUser, userLogout } = useUserStore();
+  const { currentUser } = useUserStore();
   const { opened, handleToggle } = useAppShell();
+  const { handleOpen: settingOpen } = useUsersSetting();
 
   return (
     <div className="text-white my-4 flex justify-between">
       <div className="flex gap-1 ">
         <div className=" w-[30px] h-[30px] ">
-          <img src={currentUser?.avatar || "/avatar.png"} alt="" />
+          <img src={"/avatar.png"} alt="" />
         </div>
         <h2 className="text-lg">{currentUser?.username}</h2>
       </div>
@@ -21,8 +23,7 @@ export default function UserInfoComponent() {
           "[&>svg]:font-sm"
         )}
       >
-        <button onClick={userLogout}>Logout</button>
-        <Ellipsis />
+        <Ellipsis onClick={settingOpen} />
         <Burger
           opened={opened}
           onClick={handleToggle}

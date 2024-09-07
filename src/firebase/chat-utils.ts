@@ -8,18 +8,19 @@ import {
   setDoc,
 } from "firebase/firestore";
 
-import upload from "./firebase-upload";
+// import upload from "./firebase-upload";
 import type { SendMesage, Chet } from "@/types/chat-types";
 import type { UserChat, UserItem } from "@/types/chat-types";
 import { User } from "@/types/user-types";
+import { toast } from "react-toastify";
 
 export async function sendMessaage(sendMessage: SendMesage) {
-  const { chatId, receiver, senderId, text, image } = sendMessage;
-  let imgUrl = null;
+  const { chatId, receiver, senderId, text } = sendMessage;
+  // let imgUrl = null;
 
-  if (image) {
-    imgUrl = await upload(image);
-  }
+  // if (image) {
+  //   imgUrl = await upload(image);
+  // }
 
   if (!chatId) {
     console.log("there is not chat id", chatId);
@@ -31,12 +32,12 @@ export async function sendMessaage(sendMessage: SendMesage) {
       messages: arrayUnion({
         senderId: senderId,
         text,
-        createdAt: new Date(),
-        imgUrl: imgUrl,
+        createdAt: Date.now(),
+        // imgUrl: imgUrl,
       }),
     });
   } catch (error) {
-    console.log(error);
+    toast.error("failed to sending message");
   }
 
   const userIDs = [senderId, receiver];
@@ -44,7 +45,7 @@ export async function sendMessaage(sendMessage: SendMesage) {
     try {
       await folowUpChatData(id, text, chatId, senderId);
     } catch (e) {
-      console.log(e);
+      toast.error("failed to sending message");
     }
   });
 }

@@ -4,6 +4,8 @@ import useUserStore from "@/zustand/use-user-store";
 import { addUserChat } from "@/firebase/chat-utils";
 import { getAllUser } from "@/firebase/user-utils";
 import type { User } from "@/types/user-types";
+import useUsersModal from "@/zustand/use-users-modal";
+import { toast } from "react-toastify";
 interface UsersListComponentProps
   extends ComponentProps<"div">,
     PropsWithChildren {}
@@ -12,14 +14,16 @@ export default function UsersListComponent({
   children,
   ...resProps
 }: UsersListComponentProps) {
+  const { handleClost } = useUsersModal();
   const [users, setUsers] = useState<User[]>([]);
   const { currentUser } = useUserStore();
 
   async function handleAddChat(selectedUser: User) {
     try {
       addUserChat(currentUser?.id ?? "", selectedUser?.id ?? "");
+      handleClost();
     } catch (err) {
-      console.log(err);
+      toast.error("failed to start conversation");
     }
   }
 
@@ -29,7 +33,7 @@ export default function UsersListComponent({
 
   return (
     <div className={cn("  ", " px-4 py-6 rounded-sm")} {...resProps}>
-      {users.length && (
+      {users.length > 0 && (
         <>
           {users.map((u, id) => (
             <div key={id} className="flex justify-between  gap-4 my-2">

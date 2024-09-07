@@ -3,7 +3,6 @@ import React, {
   ComponentRef,
   PropsWithChildren,
   useRef,
-  useState,
 } from "react";
 import EmojiMenu from "./emoji-menu-component";
 import { Button } from "../ui/button";
@@ -24,10 +23,10 @@ export default function TextFormComponent({
   const { currentUser } = useUserStore();
   const { chatId, user } = useChatStore();
 
-  const [img, setImg] = useState({
-    file: null as null | File,
-    url: "",
-  });
+  // const [img, setImg] = useState({
+  //   file: null as null | File,
+  //   url: "",
+  // });
 
   const inputRef = useRef<ComponentRef<"input">>(null);
 
@@ -48,7 +47,7 @@ export default function TextFormComponent({
         chatId: chatId ?? "",
         receiver: user?.id ?? "",
         senderId: currentUser?.id ?? "",
-        image: img.file ?? null,
+        // image: img.file ?? null,
         text: MessageText,
       });
     } catch (err) {
@@ -58,10 +57,10 @@ export default function TextFormComponent({
       if (inputRef.current) {
         inputRef.current.value = "";
       }
-      setImg({
-        file: null,
-        url: "",
-      });
+      // setImg({
+      //   file: null,
+      //   url: "",
+      // });
     }
   }
 

@@ -15,6 +15,7 @@ export default function MessageComponent({
   ...resProps
 }: MessageComponentProps) {
   const { currentUser } = useUserStore();
+  console.log(new Date(message.createdAt).toDateString());
   return (
     <div
       className={cn(
@@ -35,7 +36,7 @@ export default function MessageComponent({
           {message.text}
         </p>
         <span className="text-sm text-gray-400">
-          {format(message.createdAt)}
+          {format(new Date(message.createdAt))}
         </span>
       </div>
     </div>

@@ -1,6 +1,9 @@
 import { ComponentProps, PropsWithChildren } from "react";
-import type { UserChat, UserItem } from "@/types/chat-types";
+import type { UserItem } from "@/types/chat-types";
+import { format } from "timeago.js";
 import userChatStore from "@/zustand/user-chat-store";
+import useUsersModal from "@/zustand/use-users-modal";
+import { cn } from "@/lib/utils";
 
 interface UserItemComponentProps
   extends ComponentProps<"div">,
@@ -13,26 +16,42 @@ export default function UserItemComponent({
   messageItem,
   ...resProps
 }: UserItemComponentProps) {
-  const { email, username, avatar } = messageItem.user;
+  const { handleClost } = useUsersModal();
+  const { updatedAt, isSeen } = messageItem;
+  const { username, avatar, id } = messageItem.user;
   const { startChat } = userChatStore();
 
   function handleStartChat() {
     startChat(messageItem.chatId, messageItem.user);
+    handleClost();
   }
   return (
     <div
+      key={id}
       onClick={handleStartChat}
       {...resProps}
-      className="py-2 border-b-[1px] border-gray-50 cursor-pointer"
+      className={cn(
+        "p-2  cursor-pointer transition-colors duration-300 ",
+        isSeen
+          ? " border-b-[1px] border-gray-50 "
+          : " bg-blue-300/50 rounded-xl  "
+      )}
     >
-      <div className="flex py-2 gap-2">
+      <div className="flex py-2 gap-2 items-center">
         <div className="w-[30px] h-[30px]">
-          <img className="" src="/avatar.png" alt="" />
+          <img className="" src={avatar ?? "/avatar.png"} alt="" />
         </div>
-        <span>{username}</span>
+        <div>
+          <p>{username}</p>
+          <p className="text-xs font-light">{format(updatedAt)}</p>
+        </div>
       </div>
       <div>
-        <p>{messageItem.lastMessage}</p>
+        <p className="text-sm">
+          {messageItem.lastMessage.length > 10
+            ? messageItem.lastMessage.slice(0, 10) + "..."
+            : messageItem.lastMessage}
+        </p>
       </div>
     </div>
   );

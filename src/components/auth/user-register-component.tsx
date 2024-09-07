@@ -2,8 +2,7 @@ import { cn } from "@/lib/utils";
 import React, { ComponentProps, PropsWithChildren, useState } from "react";
 import { toast } from "react-toastify";
 import { userRegister } from "@/firebase/user-utils";
-import { useForm } from "react-hook-form";
-import { Input, Text } from "@mantine/core";
+import { Input } from "@mantine/core";
 
 import FormButtonComponent from "./form-button-component";
 
@@ -15,17 +14,6 @@ interface UserRegisterComponentProps
   submited: boolean;
 }
 
-// interface FormValues {
-//   image: File;
-//   username: string;
-//   email: string;
-//   password: string;
-// }
-
-// function useFormValidation() {
-//   return useForm<FormValues>({});
-// }
-
 export default function UserRegisterComponent({
   children,
   onStart,
@@ -33,22 +21,21 @@ export default function UserRegisterComponent({
   submited,
   ...resProps
 }: UserRegisterComponentProps) {
-  // const { handleSubmit } = useFormValidation();
-  const [avatar, setAvatar] = useState({
-    file: null as File | null,
-    url: "",
-  });
-  function handleAvatar(e: React.ChangeEvent<HTMLInputElement>) {
-    const formElement = e.target as HTMLInputElement;
-    if (!formElement) return;
-    if (!formElement.files) return;
-    if (formElement.files[0]) {
-      setAvatar({
-        file: formElement.files[0],
-        url: URL.createObjectURL(formElement.files[0]),
-      });
-    }
-  }
+  // const [avatar, setAvatar] = useState({
+  //   file: null as File | null,
+  //   url: "",
+  // });
+  // function handleAvatar(e: React.ChangeEvent<HTMLInputElement>) {
+  //   const formElement = e.target as HTMLInputElement;
+  //   if (!formElement) return;
+  //   if (!formElement.files) return;
+  //   if (formElement.files[0]) {
+  //     setAvatar({
+  //       file: formElement.files[0],
+  //       url: URL.createObjectURL(formElement.files[0]),
+  //     });
+  //   }
+  // }
   async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formElement = e.target as HTMLFormElement;
@@ -59,11 +46,10 @@ export default function UserRegisterComponent({
         username: formData.get("username")?.toString() ?? "",
         email: formData.get("email")?.toString() ?? "",
         password: formData.get("password")?.toString() ?? "",
-        avatar: avatar.file!,
       });
       toast.success("Account created! You can login now!");
     } catch (error) {
-      console.log(error);
+      toast.error("username or email already use");
     } finally {
       onFinishes();
     }
@@ -78,7 +64,7 @@ export default function UserRegisterComponent({
           "[&>input]:p-2 [&>input]:bg-white/80 [&>input]:outline-none [&>input]:border-none"
         )}
       >
-        <label htmlFor="file" className="flex items-center  gap-4 my-2">
+        {/* <label htmlFor="file" className="flex items-center  gap-4 my-2">
           <div className="w-[50px] h-[50px]">
             <img
               className="aspect-square"
@@ -94,7 +80,7 @@ export default function UserRegisterComponent({
           onChange={handleAvatar}
           required
           className="my-2 py-2"
-        />
+        /> */}
         <label htmlFor="username">
           <span className="text-gray-100">User Name</span>
           <Input

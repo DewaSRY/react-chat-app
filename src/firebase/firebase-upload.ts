@@ -1,12 +1,8 @@
-import { storage } from "./utils";
+import { storage, IMAGES_DB } from "./utils";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 export default async function upload(file: File): Promise<string> {
-  const date = new Date();
-  const storageRef = ref(
-    storage,
-    `images/${date.toLocaleDateString() + file.name}`
-  );
+  const storageRef = ref(storage, `${IMAGES_DB}/${Date.now()} + file.name}`);
   const uploadTask = uploadBytesResumable(storageRef, file);
   return new Promise((resolve, reject) => {
     uploadTask.on(

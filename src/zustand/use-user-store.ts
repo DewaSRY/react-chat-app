@@ -28,11 +28,12 @@ const useUserStore = create<State & Actions>((set) => ({
     }
   },
   userLogout: () => {
-    auth.signOut();
     set((s) => ({
       ...s,
       currentUser: null,
+      isLoading: false,
     }));
+    auth.signOut();
   },
 }));
 export default useUserStore;

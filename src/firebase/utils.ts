@@ -23,6 +23,7 @@ export const USER_DB = "user";
 export const USER_CHAT_DB = "user-chats";
 export const CHAT_DB = "chat";
 export const FCM_TOKEN_DB = "fcm-token";
+export const IMAGES_DB = "images";
 
 export async function requestPermision(uid: string) {
   console.log("request permision");

@@ -32,8 +32,7 @@ export default function UserLoginComponent({
       });
       toast.success("You are login!");
     } catch (e) {
-      console.log(e);
-      toast.error("failed to login");
+      toast.error("failed to login, your email or password is incorect");
     } finally {
       onFinishes();
     }

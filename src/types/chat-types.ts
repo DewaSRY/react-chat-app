@@ -1,6 +1,6 @@
 import { User } from "./user-types";
 export interface SendMesage {
-  image: File | null;
+  // image: File | null;
   chatId: string;
   senderId: string;
   text: string;
@@ -8,7 +8,7 @@ export interface SendMesage {
 }
 
 export interface Chet {
-  image?: File;
+  // image?: File;
   chatId: string;
   senderId: string;
   text: string;
@@ -38,13 +38,14 @@ export interface UserItem {
   lastMessage: string;
   receiverId: string;
   updatedAt: number;
+  isSeen?: boolean;
 }
 
 export interface Messages {
   senderId: string;
   text: string;
-  createdAt: Date;
-  imgUrl: null | string;
+  createdAt: number;
+  // imgUrl: null | string;
 }
 
 export interface ChatThread {
