@@ -12,7 +12,7 @@ import {
 
 import upload from "./firebase-upload";
 import type { SendMesage, Chet } from "@/types/chat-types";
-import type { UserChat, MessageItem } from "@/types/chat-types";
+import type { UserChat, UserItem } from "@/types/chat-types";
 import { User } from "@/types/user-types";
 
 export async function sendMessaage(sendMessage: SendMesage) {
@@ -23,18 +23,31 @@ export async function sendMessaage(sendMessage: SendMesage) {
     imgUrl = await upload(image);
   }
 
-  await updateDoc(doc(db, USER_CHAT_DB, chatId), {
-    messages: arrayUnion({
-      senderId: senderId,
-      text,
-      createdAt: new Date(),
-      imgUrl: imgUrl,
-    }),
-  });
+  if (!chatId) {
+    console.log("there is not chat id", chatId);
+    return;
+  }
+
+  try {
+    await updateDoc(doc(db, USER_CHAT_DB, chatId), {
+      messages: arrayUnion({
+        senderId: senderId,
+        text,
+        createdAt: new Date(),
+        imgUrl: imgUrl,
+      }),
+    });
+  } catch (error) {
+    console.log(error);
+  }
 
   const userIDs = [senderId, receiver];
   userIDs.forEach(async (id) => {
-    await folowUpChatData(id, text, chatId, senderId);
+    try {
+      await folowUpChatData(id, text, chatId, senderId);
+    } catch (e) {
+      console.log(e);
+    }
   });
 }
 
@@ -67,7 +80,7 @@ export async function addUserChat(senderId: string, userChatId: string) {
 
   const newChatRef = doc(chatRef);
   await setDoc(newChatRef, {
-    createdAt: serverTimestamp(),
+    createdAt: Date.now(),
     messages: [],
   });
 
@@ -90,7 +103,7 @@ export async function addUserChat(senderId: string, userChatId: string) {
   });
 }
 
-function userChatComparator(a: MessageItem, b: MessageItem) {
+function userChatComparator(a: UserItem, b: UserItem) {
   if (a.updatedAt || b.updatedAt) return 0;
   return b.updatedAt - a.updatedAt;
 }
@@ -99,7 +112,7 @@ export async function getMessageItems(userChat: UserChat) {
     const userDocRef = doc(db, USER_DB, item.receiverId);
     const userDocSnap = await getDoc(userDocRef);
     const userData = userDocSnap.data() as User;
-    return { ...item, user: userData } as MessageItem;
+    return { ...item, user: userData } as UserItem;
   });
 
   let chatData = await Promise.all(promisses);

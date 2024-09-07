@@ -1,24 +1,26 @@
 import { create } from "zustand";
 import useUserStore from "./use-user-store";
 import type { User } from "@/types/user-types";
+import type { Messages } from "@/types/chat-types";
 const initialState = {
   user: null as null | User,
   chatId: null as null | string,
   isCurrentUserBlocked: false,
   isReceiverBlocked: false,
+  messagesList: [] as Messages[],
 };
 type Actions = {
-  changeChat: (chatId: string, user: User) => Promise<void>;
+  startChat: (chatId: string, user: User) => Promise<void>;
   changeBlock: () => void;
   resetChat: () => void;
+  setMessagesList: (messagesList: Messages[]) => void;
 };
 type State = typeof initialState;
-const userChatStore = create<State & Actions>((set) => ({
+const useChatStore = create<State & Actions>((set) => ({
   ...initialState,
-  changeChat: async (chatId, user) => {
+  startChat: async (chatId, user) => {
     const currrentUser = useUserStore.getState().currentUser;
     if (!currrentUser) return;
-    // CHECK IF CURRENT USER IS BLOCKED
     if (user.blocked.includes(currrentUser.id)) {
       return set({
         chatId,
@@ -26,9 +28,7 @@ const userChatStore = create<State & Actions>((set) => ({
         isCurrentUserBlocked: true,
         isReceiverBlocked: false,
       });
-    }
-    // CHECK IF RECEIVER IS BLOCKED
-    else if (currrentUser.blocked.includes(user.id)) {
+    } else if (currrentUser.blocked.includes(user.id)) {
       return set({
         chatId,
         user: user,
@@ -44,6 +44,9 @@ const userChatStore = create<State & Actions>((set) => ({
       });
     }
   },
+  setMessagesList: (m) => {
+    set((s) => ({ ...s, messagesList: m }));
+  },
   changeBlock: () => {
     set((state) => ({ ...state, isReceiverBlocked: !state.isReceiverBlocked }));
   },
@@ -56,4 +59,4 @@ const userChatStore = create<State & Actions>((set) => ({
     });
   },
 }));
-export default userChatStore;
+export default useChatStore;

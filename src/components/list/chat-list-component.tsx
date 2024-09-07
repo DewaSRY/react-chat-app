@@ -28,7 +28,6 @@ export default function ChatListComponent() {
       unSub();
     };
   }, [currentUser?.id]);
-  console.log(itemList);
   return (
     <div className=" ">
       <FilterFriendsComponent />
