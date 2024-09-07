@@ -3,6 +3,7 @@ import ChatComponent from "./components/chat/chat-component";
 import UserInfoComponent from "./components/user-info/user-info-component";
 import NotificationComponent from "./components/notification/notification-component";
 import UserSettingComponent from "./components/user-setting/user-setting-component";
+import SpeeachModalComponent from "./components/speeach-modal/speeach-modal-component";
 import { onAuthStateChanged } from "firebase/auth";
 import useUserStore from "@/zustand/use-user-store";
 import { useEffect } from "react";
@@ -70,6 +71,7 @@ function App() {
       <NotificationComponent />
       <UsersModalComponent />
       <UserSettingComponent />
+      <SpeeachModalComponent />
     </>
   );
 }

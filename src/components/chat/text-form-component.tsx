@@ -12,6 +12,8 @@ import useUserStore from "@/zustand/use-user-store";
 
 import { sendMessaage } from "@/firebase/chat-utils";
 import { toast } from "react-toastify";
+import useSpeeachModal from "@/zustand/user-speeach-modal";
+import { Mic } from "lucide-react";
 interface TextFormComponentProps
   extends ComponentProps<"form">,
     PropsWithChildren {}
@@ -20,6 +22,7 @@ export default function TextFormComponent({
   children,
   ...resProps
 }: TextFormComponentProps) {
+  const { handleOpen } = useSpeeachModal();
   const { currentUser } = useUserStore();
   const { chatId, user } = useChatStore();
 
@@ -77,6 +80,7 @@ export default function TextFormComponent({
         type="text"
       />
 
+      <Mic onClick={handleOpen} />
       <EmojiMenu handlePick={handleEmojiClick} />
       <Button className="">
         Sendin <PaperPlaneIcon className="ml-2" />

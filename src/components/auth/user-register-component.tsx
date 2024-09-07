@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import React, { ComponentProps, PropsWithChildren, useState } from "react";
+import React, { ComponentProps, PropsWithChildren } from "react";
 import { toast } from "react-toastify";
 import { userRegister } from "@/firebase/user-utils";
 import { Input } from "@mantine/core";

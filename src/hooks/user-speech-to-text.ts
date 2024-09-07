@@ -13,7 +13,7 @@ export default function useSpeekToText(callback = (_text: string) => {}) {
 
     recognitionRef.current.interimResults = true;
     recognitionRef.current.lang = "en-US";
-    recognitionRef.current.continuous = true;
+    recognitionRef.current.continuous = false;
     if ("webkitSpeechRecognition" in window) {
       const grammer =
         "#JSGF v1.0; grammer punctuation; public <punc> = . | , ? | ! | ; | : ;";
@@ -28,12 +28,12 @@ export default function useSpeekToText(callback = (_text: string) => {}) {
         text += event.results[i][0].transcript;
       }
       setTranscript(text);
-      console.log(text);
+      //   console.log(text);
       callback(text);
     };
 
     recognitionRef.current.onerror = (event) => {
-      console.log("get an error");
+      //   console.log("get an error");
     };
     recognitionRef.current.onend = (event) => {
       setIsListening(false);
@@ -53,7 +53,7 @@ export default function useSpeekToText(callback = (_text: string) => {}) {
 
   function stopListening() {
     if (recognitionRef.current && isListening) {
-      console.log("get call");
+      //   console.log("get call");
       recognitionRef.current.stop();
       setIsListening(false);
       // setTranscript("");
