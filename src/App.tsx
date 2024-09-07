@@ -11,6 +11,7 @@ import AuthComponent from "./components/auth/auth-component";
 // import { useDisclosure } from "@mantine/hooks";
 import UsersModalComponent from "@/components/users-modal/users-modal-component";
 import useAppShell from "./zustand/use-app-shell";
+import { initNotifivation } from "@/firebase/fcm-utils";
 
 function App() {
   const { currentUser, fetchUserInfo, isLoading } = useUserStore();
@@ -20,6 +21,7 @@ function App() {
     const unSub = onAuthStateChanged(auth, (user) => {
       if (user?.uid) {
         fetchUserInfo(user?.uid);
+        initNotifivation();
       }
     });
     return () => {
@@ -31,7 +33,7 @@ function App() {
     <>
       {currentUser ? (
         <>
-          <div className="fixed top-2 right-1 cursor-pointer z-20">
+          <div className="fixed top-2 right-1 cursor-pointer ">
             <Burger
               opened={opened}
               onClick={handleToggle}

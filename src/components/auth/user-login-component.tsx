@@ -59,7 +59,7 @@ export default function UserLoginComponent({
             id="email"
           />
         </label>
-        <label htmlFor="password">
+        <label htmlFor="password-login">
           <span className="text-gray-100">Password</span>
           <Input
             required
@@ -67,7 +67,7 @@ export default function UserLoginComponent({
             type="password"
             placeholder="Password"
             name="password"
-            id="password"
+            id="password-login"
             minLength={8}
           />
         </label>

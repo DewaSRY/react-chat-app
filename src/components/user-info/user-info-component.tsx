@@ -28,6 +28,7 @@ export default function UserInfoComponent() {
           onClick={handleToggle}
           hiddenFrom="sm"
           size="lg"
+          className="cursor-pointer  top-2 right-2 z-50"
         />
       </div>
     </div>

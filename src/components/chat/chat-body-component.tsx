@@ -8,7 +8,8 @@ import useChatStore from "@/zustand/user-chat-store";
 import { db, CHAT_DB } from "@/firebase/utils";
 import type { ChatThread } from "@/types/chat-types";
 import { doc, onSnapshot } from "firebase/firestore";
-
+import { saveMasagingDeviceToken } from "@/firebase/fcm-utils";
+import useUserStore from "@/zustand/use-user-store";
 interface ChatBodyComponentProps
   extends ComponentProps<"div">,
     PropsWithChildren {}
@@ -17,6 +18,7 @@ export default function ChatBodyComponent({
   children,
   ...resProps
 }: ChatBodyComponentProps) {
+  const { currentUser } = useUserStore();
   const { chatId, setMessagesList } = useChatStore();
   useEffect(() => {
     if (!chatId) return;
@@ -29,6 +31,11 @@ export default function ChatBodyComponent({
       unSub();
     };
   }, [chatId]);
+
+  useEffect(() => {
+    saveMasagingDeviceToken(currentUser?.id ?? "");
+  }, []);
+
   return (
     <div {...resProps}>
       <UserInfoComponent />
