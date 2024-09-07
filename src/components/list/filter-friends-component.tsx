@@ -10,21 +10,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import useFriendsItems from "@/zustand/use-friends-items";
-import useDebaunce from "@/hooks/use-debaunch";
-
-// interface FilterFriendsComponentProps
-//   extends ComponentProps<"div">,
-//     PropsWithChildren {}
+import useDebounce from "@/hooks/use-debounce";
 
 export default function FilterFriendsComponent() {
   const [isAdd, setisAdd] = useState(false);
 
   const { searchItems } = useFriendsItems();
-  const { v, handleVChange } = useDebaunce(searchItems);
+  const { v, handleVChange } = useDebounce(searchItems);
 
   return (
     <form
-      action=""
       className={cn("flex  bg-gray-800/90 relative rounded-md items-center")}
     >
       <Search className=" " />

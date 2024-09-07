@@ -8,8 +8,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import useUserStore from "@/zustand/use-user-store";
 import { useEffect } from "react";
 import { auth } from "./firebase/utils";
+import { AppShell, Burger } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+
 function App() {
   const { currentUser, fetchUserInfo, isLoading } = useUserStore();
+  const [opened, { toggle }] = useDisclosure(currentUser === null);
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
@@ -23,26 +27,39 @@ function App() {
   }, [fetchUserInfo]);
   if (isLoading) return <div className="loading">Loading...</div>;
   return (
-    <div
-      className={cn(
-        "my-[5vh] mx-auto py-8 px-4 w-[90vw] h-[90vh] ",
-        "bg-gray-700/80 rounded-2xl backdrop-blur-sm saturate-[180%] ",
-        ""
-      )}
-    >
-      {currentUser ? (
-        <div className="flex gap-1 ">
-          <ListComponent />
-          <ChatComponent />
-          {/* <DetailComponent /> */}
-        </div>
-      ) : (
-        <LoginComponent />
-      )}
+    <>
+      <AppShell
+        header={{ height: 60 }}
+        navbar={{
+          width: 300,
+          breakpoint: "sm",
+          collapsed: { mobile: !opened },
+        }}
+        padding="md"
+      >
+        <AppShell.Header>
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+          <div>Logo</div>
+        </AppShell.Header>
 
-      {/* <ToastContainer /> */}
+        {currentUser && (
+          <AppShell.Navbar className="" p="md">
+            <ListComponent />
+          </AppShell.Navbar>
+        )}
+
+        <AppShell.Main>
+          {currentUser?.id.length ? (
+            <>
+              <ChatComponent />
+            </>
+          ) : (
+            <LoginComponent />
+          )}
+        </AppShell.Main>
+      </AppShell>
       <NotificationComponent />
-    </div>
+    </>
   );
 }
 

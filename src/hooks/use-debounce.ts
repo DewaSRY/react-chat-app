@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { clearTimeout } from "timers";
 
-export default function useDebaunce(callbac: (value: string) => void) {
+export default function useDebounce(callback: (value: string) => void) {
   const [v, setV] = useState("");
 
   useEffect(() => {
-    let timeId = setTimeout(() => {
-      callbac(v);
+    const timeId = setTimeout(() => {
+      callback(v);
     }, 500);
 
     return () => {
       clearTimeout(timeId);
     };
-  }, [v]);
+  }, [v, callback]);
 
   function handleVChange(e: React.ChangeEvent<HTMLInputElement>) {
     setV(e.target.value);

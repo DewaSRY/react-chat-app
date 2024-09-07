@@ -1,19 +1,14 @@
 import { create } from "zustand";
-import { db, USER_DB } from "@/firebase/utils";
+import { auth, db, USER_DB } from "@/firebase/utils";
 import { doc, getDoc } from "firebase/firestore";
 import type { User } from "@/types/user-types";
 const initialState = {
-  currentUser: {
-    id: Math.random().toString(),
-    username: "",
-    blocked: [],
-    email: "",
-    avatar: "",
-  } as null | User,
+  currentUser: null as null | User,
   isLoading: false,
 };
 type Actions = {
   fetchUserInfo: (uuid: string) => Promise<void>;
+  userLogout: () => void;
 };
 type State = typeof initialState;
 const useUserStore = create<State & Actions>((set) => ({
@@ -31,6 +26,13 @@ const useUserStore = create<State & Actions>((set) => ({
     } catch (err) {
       set({ currentUser: null, isLoading: false });
     }
+  },
+  userLogout: () => {
+    auth.signOut();
+    set((s) => ({
+      ...s,
+      currentUser: null,
+    }));
   },
 }));
 export default useUserStore;

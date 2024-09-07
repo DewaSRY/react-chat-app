@@ -64,16 +64,14 @@ async function folowUpChatData(
 
 export async function addUserChat(senderId: string, userChatId: string) {
   const chatRef = collection(db, CHAT_DB);
-  const userChatsRef = collection(db, USER_CHAT_DB);
 
   const newChatRef = doc(chatRef);
-
   await setDoc(newChatRef, {
     createdAt: serverTimestamp(),
     messages: [],
   });
 
-  await updateDoc(doc(userChatsRef, senderId), {
+  await updateDoc(doc(db, USER_CHAT_DB, senderId), {
     chats: arrayUnion({
       chatId: newChatRef.id,
       lastMessage: "",
@@ -82,7 +80,7 @@ export async function addUserChat(senderId: string, userChatId: string) {
     }),
   });
 
-  await updateDoc(doc(userChatsRef, userChatId), {
+  await updateDoc(doc(db, USER_CHAT_DB, userChatId), {
     chats: arrayUnion({
       chatId: newChatRef.id,
       lastMessage: "",

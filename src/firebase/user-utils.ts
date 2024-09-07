@@ -12,12 +12,14 @@ import { where } from "firebase/firestore/lite";
 import type { User } from "@/types/user-types";
 
 export async function userRegister(userRegister: UserRegister) {
-  // console.log(userRegister);
-  const userRef = collection(db, "user");
+  const userRef = collection(db, USER_DB);
   const q = query(userRef, where("username", "==", userRegister.username));
+
   const querySnapshot = await getDocs(q);
   if (!querySnapshot.empty) {
-    throw Error("username already use");
+    const currentdata = querySnapshot.docs[0].data() as User;
+    if (currentdata.username === userRegister.username)
+      throw Error("username already use");
   }
 
   const imgUrl = await imgUpload(userRegister.avatar);
@@ -35,13 +37,14 @@ export async function userRegister(userRegister: UserRegister) {
     id: res.user.uid,
     blocked: [],
   });
-
+  console.log(res);
   await setDoc(doc(db, USER_CHAT_DB, res.user.uid), {
     chats: [],
   });
 }
 
 export async function userLogin(userLogin: UserLogin) {
+  console.log(userLogin);
   await signInWithEmailAndPassword(auth, userLogin.email, userLogin.password);
 }
 export async function searchUser(username: string) {

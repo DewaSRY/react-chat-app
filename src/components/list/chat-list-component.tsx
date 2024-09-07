@@ -14,8 +14,9 @@ export default function ChatListComponent() {
 
   const { currentUser } = useUserStore();
   useEffect(() => {
+    if (!currentUser) return;
     const unSub = onSnapshot(
-      doc(db, USER_CHAT_DB, currentUser?.id || ""),
+      doc(db, USER_CHAT_DB, currentUser?.id),
       async (res) => {
         if (!res.data()) return;
         const userChat = res.data() as UserChat;
@@ -27,6 +28,7 @@ export default function ChatListComponent() {
       unSub();
     };
   }, [currentUser?.id]);
+  console.log(itemList);
   return (
     <div className=" ">
       <FilterFriendsComponent />
