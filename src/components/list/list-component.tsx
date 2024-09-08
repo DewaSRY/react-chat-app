@@ -10,6 +10,7 @@ import FilterFriendsComponent from "./filter-friends-component";
 import FriendListComponent from "@/components/friend-list/friend-list-component";
 import AddFriendsComponent from "./add-friends-component";
 import VoiceOptionComponent from "./voice-option-component";
+import StartGeminiComponent from "./start-gemini-component";
 export default function ListComponent() {
   const { setMessageItem } = useFriendsItems();
 
@@ -32,9 +33,12 @@ export default function ListComponent() {
   return (
     <div className="relative ">
       <FilterFriendsComponent />
-      <AddFriendsComponent />
+      <div className="flex gap-2 my-4 justify-between">
+        <VoiceOptionComponent className="" />
+        <StartGeminiComponent />
+        <AddFriendsComponent />
+      </div>
       <FriendListComponent />
-      <VoiceOptionComponent className="absolute bottom-6 left-1" />
     </div>
   );
 }

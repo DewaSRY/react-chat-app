@@ -1,44 +1,40 @@
 import { ComponentProps, PropsWithChildren } from "react";
+
 import { format } from "timeago.js";
-import type { Messages } from "@/types/chat-types";
 import { cn } from "@/lib/utils";
-import useUserStore from "@/zustand/use-user-store";
 import { usetextToSpeach } from "@/provider/text-to-speach-provider";
 import { Speech } from "lucide-react";
-
-interface MessageComponentProps
+import type { GeminiMessages } from "@/types/gemini-chat-types";
+interface MessaagesComponentProps
   extends ComponentProps<"div">,
     PropsWithChildren {
-  message: Messages;
+  message: GeminiMessages;
 }
 
-export default function MessageComponent({
+export default function MessagesComponent({
   children,
   message,
-  ...resProps
-}: MessageComponentProps) {
-  const { currentUser } = useUserStore();
+  ...resProsp
+}: MessaagesComponentProps) {
   const { readText } = usetextToSpeach();
-
   function readingText() {
     // if (isReading) return;
     readText(message.text);
   }
+
   return (
     <div
       className={cn(
-        "px-2 py-4  max-w-[90vh]  lg:max-w-[600px] ",
-        currentUser?.id === message.senderId && " self-end"
+        "px-2 py-4 max-w-[90vh]  lg:max-w-[600px] ",
+        message.owner === "user" && " lg:self-end"
       )}
-      {...resProps}
+      {...resProsp}
     >
       <div className="">
         <p
           className={cn(
             " p-2  rounded-md",
-            currentUser?.id === message.senderId
-              ? " bg-blue-400/30"
-              : "bg-gray-800/60 "
+            message.owner === "user" ? " bg-blue-400/30" : "bg-gray-800/60 "
           )}
         >
           {message.text}

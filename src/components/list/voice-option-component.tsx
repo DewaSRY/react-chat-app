@@ -1,5 +1,5 @@
-import { Menu, Button } from "@mantine/core";
-
+import { Menu, Button, Tooltip } from "@mantine/core";
+import { Volume2 } from "lucide-react";
 import React, { ComponentProps, PropsWithChildren } from "react";
 import { usetextToSpeach } from "@/provider/text-to-speach-provider";
 interface VoiceOptionComponentProps
@@ -16,11 +16,17 @@ export default function VoiceOptionComponent({
     setVoices(parseInt(e.target.value ?? 0));
   }
 
+  if (voices.length === 0) return null;
+
   return (
     <div key={voices.length} {...restProps}>
       <Menu shadow="md">
         <Menu.Target>
-          <Button>Voice Options</Button>
+          <Tooltip label="Voice Option">
+            <Button>
+              <Volume2 />
+            </Button>
+          </Tooltip>
         </Menu.Target>
         <Menu.Dropdown className="p-2">
           <Menu.Label>Select your Voice</Menu.Label>

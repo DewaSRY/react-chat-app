@@ -36,6 +36,7 @@ export default function TextFormComponent({
     const MessageText = fromData.get("text")?.toString() ?? "";
     if (!chatId && !user?.id && !currentUser?.id) return;
     try {
+      toast.warn("gemini fetch answer");
       await sendGeminiMessages({
         geminiChatId: currentUser?.id ?? "",
         owner: "user",

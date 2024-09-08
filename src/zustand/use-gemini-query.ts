@@ -5,7 +5,7 @@ import useUserStore from "./use-user-store";
 import { toast } from "react-toastify";
 const initialState = {
   count: 0,
-  isLoading: true,
+  isLoading: false,
 };
 type Actions = {
   textingGemini: (_q: string) => Promise<void>;

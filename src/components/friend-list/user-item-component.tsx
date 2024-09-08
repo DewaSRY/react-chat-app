@@ -5,6 +5,8 @@ import userChatStore from "@/zustand/user-chat-store";
 import useAppShell from "@/zustand/use-app-shell";
 import { cn } from "@/lib/utils";
 
+import useBody from "@/zustand/use-body";
+
 interface UserItemComponentProps
   extends ComponentProps<"div">,
     PropsWithChildren {
@@ -20,10 +22,12 @@ export default function UserItemComponent({
   const { updatedAt, isSeen } = messageItem;
   const { username, avatar, id } = messageItem.user;
   const { startChat } = userChatStore();
+  const { setCurrentActive } = useBody();
 
   function handleStartChat() {
     startChat(messageItem.chatId, messageItem.user);
     handleClost();
+    setCurrentActive("chat");
   }
   return (
     <div

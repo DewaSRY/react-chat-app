@@ -4,8 +4,8 @@ import useGeminiChat from "@/zustand/use-gemini-chat";
 import useUserStore from "@/zustand/use-user-store";
 import { doc, onSnapshot } from "firebase/firestore";
 import { ComponentProps, PropsWithChildren, useEffect } from "react";
-import MessagesListComponent from "./messages-list-component";
 import TextFormComponent from "./text-form-component";
+import MessageThredComponent from "./message-thred-component";
 interface GeminiChatComponentProps
   extends ComponentProps<"div">,
     PropsWithChildren {}
@@ -29,8 +29,8 @@ export default function GeminiChatComponent({
     };
   }, []);
   return (
-    <div {...resProps}>
-      <MessagesListComponent />
+    <div {...resProps} className="">
+      <MessageThredComponent />
       <TextFormComponent />
     </div>
   );
