@@ -7,9 +7,9 @@ import type { User, UserItem } from "@/types/user-types";
 import useUsersModal from "@/zustand/use-users-modal";
 import useBody from "@/zustand/use-body";
 import { toast } from "react-toastify";
-import useChatStore from "@/zustand/user-chat-store";
+// import useChatStore from "@/zustand/user-chat-store";
 import useAppShell from "@/zustand/use-app-shell";
-import { Button } from "@mantine/core";
+// import { Button } from "@mantine/core";
 // import useChatStore from "@/zustand/user-chat-store";
 interface UsersListComponentProps
   extends ComponentProps<"div">,
