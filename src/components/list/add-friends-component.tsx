@@ -1,13 +1,13 @@
-import { ComponentProps, PropsWithChildren } from "react";
+// import { ComponentProps, PropsWithChildren } from "react";
 import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
 
 import useUsersModal from "@/zustand/use-users-modal";
 import { Button, Tooltip } from "@mantine/core";
 
-interface AddFriendsComponentProps
-  extends ComponentProps<"button">,
-    PropsWithChildren {}
+// interface AddFriendsComponentProps
+//   extends ComponentProps<"button">,
+//     PropsWithChildren {}
 
 export default function AddFriendsComponent() {
   const { handleOpen } = useUsersModal();

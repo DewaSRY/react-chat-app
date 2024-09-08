@@ -1,12 +1,4 @@
-import {
-  arrayUnion,
-  collection,
-  doc,
-  getDoc,
-  query,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { GEMINI_DB, db } from "./utils";
 import type {
   GeminiChatThread,
