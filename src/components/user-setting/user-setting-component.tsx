@@ -9,7 +9,7 @@ export default function UserSettingComponent() {
       size="sm"
       opened={opened}
       onClose={handleClost}
-      title="Authentication"
+      title="User settings"
     >
       <SettingPanelComponent />
     </Modal>

@@ -14,6 +14,7 @@ import useSpeeachModal from "@/zustand/user-speeach-modal";
 import { Mic } from "lucide-react";
 import { sendGeminiMessages } from "@/firebase/gemini-utils";
 import useGeminiQuery from "@/zustand/use-gemini-query";
+import { cn } from "@/lib/utils";
 interface TextFormComponentProps
   extends ComponentProps<"form">,
     PropsWithChildren {}
@@ -52,6 +53,11 @@ export default function TextFormComponent({
     }
   }
 
+  function handleOpenSpeachRecognition() {
+    if (isLoading) return;
+    handleOpen();
+  }
+
   return (
     <form
       onSubmit={handleSendMessage}
@@ -65,7 +71,10 @@ export default function TextFormComponent({
         type="text"
       />
 
-      <Mic className="cursor-pointer" onClick={handleOpen} />
+      <Mic
+        className={cn(isLoading ? " cursor-text " : " cursor-pointer ")}
+        onClick={handleOpenSpeachRecognition}
+      />
       <Button
         disabled={isLoading}
         className="disabled:bg-gray-500 disabled:text-gray-200"
