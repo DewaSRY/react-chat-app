@@ -80,7 +80,7 @@ export default function TextFormComponent({
         type="text"
       />
 
-      <Mic onClick={handleOpen} />
+      <Mic className="cursor-pointer" onClick={handleOpen} />
       <EmojiMenu handlePick={handleEmojiClick} />
       <Button className="">
         Sendin <PaperPlaneIcon className="ml-2" />

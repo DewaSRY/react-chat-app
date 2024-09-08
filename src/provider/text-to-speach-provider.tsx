@@ -25,12 +25,9 @@ interface ProviderProps
 export default function Provider({ children }: ProviderProps) {
   const selectedRef = useRef<ComponentRef<"select">>(null);
   const speeachRef = useRef(new SpeechSynthesisUtterance());
-  const voicesRef = useRef(window.speechSynthesis.getVoices());
+  const [voices, iniVoices] = useState<SpeechSynthesisVoice[]>([]);
 
   const [isReading, setisReading] = useState(false);
-  // const [voices, setAllvoices] = useState<SpeechSynthesisVoice[]>(
-  //   window.speechSynthesis.getVoices()
-  // );
 
   function readText(text: string) {
     speeachRef.current.text = text;
@@ -42,55 +39,18 @@ export default function Provider({ children }: ProviderProps) {
   }
 
   useEffect(() => {
+    iniVoices(window.speechSynthesis.getVoices());
+    // console.log(window.speechSynthesis.getVoices());
     window.speechSynthesis.onvoiceschanged = () => {
-      // setAllvoices(window.speechSynthesis.getVoices());
       if (speeachRef.current) {
-        speeachRef.current.voice = voicesRef.current[0];
+        speeachRef.current.voice = voices[0];
       }
     };
   }, []);
 
   function setVoices(voiceIndex: number) {
-    // if (voices?.length) {
-    speeachRef.current.voice = voicesRef.current[voiceIndex];
-    // }
+    speeachRef.current.voice = voices[voiceIndex];
   }
-
-  // useEffect(() => {
-  //   let time = setTimeout(() => {
-  //     if (selectedRef.current) {
-  //       voices.forEach((v, idx) => {
-  //         selectedRef.current!.options[idx] = new Option(
-  //           v.name,
-  //           idx.toString()
-  //         );
-  //       });
-  //     }
-  //   }, 500);
-
-  //   return () => {
-  //     clearTimeout(time);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   function selectedVoice() {
-  //     if (selectedRef.current && speeachRef.current) {
-  //       speeachRef.current.voice =
-  //         voices[parseInt(selectedRef.current.value ?? 0)];
-  //     }
-  //   }
-
-  //   if (selectedRef.current) {
-  //     selectedRef.current.addEventListener("change", selectedVoice);
-  //   }
-
-  //   return () => {
-  //     if (selectedRef.current) {
-  //       selectedRef.current.removeEventListener("change", selectedVoice);
-  //     }
-  //   };
-  // }, []);
 
   return (
     <TextToSpeachContext.Provider
@@ -98,7 +58,7 @@ export default function Provider({ children }: ProviderProps) {
         selectedRef,
         isReading,
         readText,
-        voices: voicesRef.current,
+        voices,
         setVoices,
       }}
     >

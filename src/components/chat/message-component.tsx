@@ -20,13 +20,13 @@ export default function MessageComponent({
   const { readText, isReading } = usetextToSpeach();
 
   function readingText() {
-    if (isReading) return;
+    // if (isReading) return;
     readText(message.text);
   }
   return (
     <div
       className={cn(
-        "px-2 py-4 max-w-[330px] ",
+        "px-2 py-4  max-w-[330p] md:max-w-[30vw] ",
         currentUser?.id === message.senderId && " self-end"
       )}
       {...resProps}
@@ -43,14 +43,14 @@ export default function MessageComponent({
           {message.text}
         </p>
         <div className="flex justify-between">
-          <span className="text-sm text-gray-400">
-            {format(new Date(message.createdAt))}
-          </span>
           <span
             onClick={readingText}
             className="text-sm text-gray-400 cursor-pointer flex gap-2"
           >
             <Speech /> Speach
+          </span>
+          <span className="text-sm text-gray-400">
+            {format(new Date(message.createdAt))}
           </span>
         </div>
       </div>
