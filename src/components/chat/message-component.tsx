@@ -43,7 +43,7 @@ export default function MessageComponent({
         >
           {message.text}
         </p>
-        <div className="flex justify-between">
+        <div className="flex justify-between my-4 ">
           <span
             onClick={readingText}
             className="text-sm text-gray-400 cursor-pointer flex gap-2"

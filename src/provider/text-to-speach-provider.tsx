@@ -30,6 +30,7 @@ export default function Provider({ children }: ProviderProps) {
   const [isReading, setisReading] = useState(false);
 
   function readText(text: string) {
+    _iniVoices();
     if (!isReading) {
       speeachRef.current.text = text;
       speeachRef.current.onend = () => {
@@ -43,13 +44,27 @@ export default function Provider({ children }: ProviderProps) {
     }
   }
 
+  function _iniVoices() {
+    if (voices.length === 0) {
+      iniVoices(window.speechSynthesis.getVoices());
+    }
+  }
+
   useEffect(() => {
     iniVoices(window.speechSynthesis.getVoices());
-    // console.log(window.speechSynthesis.getVoices());
+    console.log(window.speechSynthesis.getVoices());
     window.speechSynthesis.onvoiceschanged = () => {
       if (speeachRef.current) {
         speeachRef.current.voice = voices[0];
       }
+    };
+
+    let time = setTimeout(() => {
+      _iniVoices();
+    }, 300);
+
+    return () => {
+      clearTimeout(time);
     };
   }, []);
 
