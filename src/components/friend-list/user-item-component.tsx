@@ -31,7 +31,7 @@ export default function UserItemComponent({
       onClick={handleStartChat}
       {...resProps}
       className={cn(
-        "p-2  cursor-pointer transition-colors duration-300 ",
+        "p-2  cursor-pointer transition-colors duration-300 my-2",
         isSeen
           ? " border-b-[1px] border-gray-50 "
           : " bg-blue-300/50 rounded-xl  "

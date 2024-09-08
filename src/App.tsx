@@ -22,6 +22,7 @@ function App() {
 
   useEffect(() => {
     toast.warn("try to fetch user ");
+
     const unSub = onAuthStateChanged(auth, (user) => {
       if (user?.uid) {
         fetchUserInfo(user?.uid);
@@ -49,6 +50,7 @@ function App() {
               size="xl"
             />
           </div>
+
           <AppShell
             navbar={{
               width: 300,
