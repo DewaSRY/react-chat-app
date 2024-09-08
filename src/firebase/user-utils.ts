@@ -43,7 +43,6 @@ export async function userRegister(userRegister: UserRegister) {
 }
 
 export async function userLogin(userLogin: UserLogin) {
-  console.log(userLogin);
   await signInWithEmailAndPassword(auth, userLogin.email, userLogin.password);
 }
 export async function searchUser(username: string) {

@@ -30,12 +30,17 @@ export default function Provider({ children }: ProviderProps) {
   const [isReading, setisReading] = useState(false);
 
   function readText(text: string) {
-    speeachRef.current.text = text;
-    speeachRef.current.onend = () => {
+    if (!isReading) {
+      speeachRef.current.text = text;
+      speeachRef.current.onend = () => {
+        setisReading(false);
+      };
+      window.speechSynthesis.speak(speeachRef.current);
+      setisReading(true);
+    } else {
+      window.speechSynthesis.cancel();
       setisReading(false);
-    };
-    window.speechSynthesis.speak(speeachRef.current);
-    setisReading(true);
+    }
   }
 
   useEffect(() => {

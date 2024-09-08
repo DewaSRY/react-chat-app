@@ -14,7 +14,10 @@ export async function geminiRequest(question: string = "what is apple") {
   });
   console.log(JSON.stringify(data));
   let textData = data.candidates[0].content.parts[0].text;
-  textData = textData.replace("/[\\n\\*]/g", " ");
+  textData = textData
+    .replace("/[\\n\\*]/g", " ")
+    .replace(/\*\*/g, "")
+    .replace(/\*/g, "");
   console.log(textData);
   return textData;
 }

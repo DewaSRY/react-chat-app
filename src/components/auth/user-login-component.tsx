@@ -24,7 +24,6 @@ export default function UserLoginComponent({
     onStart();
     const formElement = e.target as HTMLFormElement;
     const formData = new FormData(formElement);
-    console.log("call");
     try {
       await userLogin({
         email: formData.get("email")?.toString() ?? "",

@@ -1,13 +1,11 @@
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { GEMINI_DB, db } from "./utils";
 import type {
-  GeminiChatThread,
+  //   GeminiChatThread,
   GeminiMessagePayload,
 } from "@/types/gemini-chat-types";
 
-export async function startChatGemini(
-  userId: string = ""
-): Promise<GeminiChatThread> {
+export async function startChatGemini(userId: string) {
   const q = doc(db, GEMINI_DB, userId);
   const dataSnapeshot = await getDoc(q);
   if (dataSnapeshot.data() === undefined) {
@@ -16,7 +14,7 @@ export async function startChatGemini(
     });
     return await startChatGemini(userId);
   }
-  return dataSnapeshot.data() as GeminiChatThread;
+  return dataSnapeshot.data();
 }
 
 export async function sendGeminiMessages(payload: GeminiMessagePayload) {
