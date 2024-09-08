@@ -67,6 +67,7 @@ export default function TextFormComponent({
         ref={inputRef}
         name="text"
         type="text"
+        placeholder="Type Any message to your friends"
       />
 
       <Mic className="cursor-pointer" onClick={handleOpen} />

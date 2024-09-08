@@ -21,21 +21,6 @@ export default function UserRegisterComponent({
   submited,
   ...resProps
 }: UserRegisterComponentProps) {
-  // const [avatar, setAvatar] = useState({
-  //   file: null as File | null,
-  //   url: "",
-  // });
-  // function handleAvatar(e: React.ChangeEvent<HTMLInputElement>) {
-  //   const formElement = e.target as HTMLInputElement;
-  //   if (!formElement) return;
-  //   if (!formElement.files) return;
-  //   if (formElement.files[0]) {
-  //     setAvatar({
-  //       file: formElement.files[0],
-  //       url: URL.createObjectURL(formElement.files[0]),
-  //     });
-  //   }
-  // }
   async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formElement = e.target as HTMLFormElement;
@@ -86,7 +71,7 @@ export default function UserRegisterComponent({
           <Input
             required
             type="text"
-            placeholder="Username"
+            placeholder="Insert username "
             name="username"
             id="username"
           />
@@ -97,7 +82,7 @@ export default function UserRegisterComponent({
           <Input
             required
             type="text"
-            placeholder="Email"
+            placeholder="Inserty Your email"
             name="email"
             id="email"
           />
@@ -107,10 +92,10 @@ export default function UserRegisterComponent({
           <Input
             required
             type="password"
-            placeholder="Password"
+            placeholder="Password shoudl more then 8 character"
             name="password"
             id="password"
-            defaultValue="April10Dua004"
+            defaultValue=""
             minLength={8}
           />
         </label>

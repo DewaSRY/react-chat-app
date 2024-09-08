@@ -52,7 +52,7 @@ export default function UserLoginComponent({
           <Input
             required
             type="email"
-            placeholder="Email"
+            placeholder="Insert Email"
             name="email"
             id="email"
           />
@@ -61,9 +61,8 @@ export default function UserLoginComponent({
           <span className="text-gray-100">Password</span>
           <Input
             required
-            defaultValue="April10Dua004"
             type="password"
-            placeholder="Password"
+            placeholder="Password must be 8 character"
             name="password"
             id="password-login"
             minLength={8}

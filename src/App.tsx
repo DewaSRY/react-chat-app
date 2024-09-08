@@ -23,15 +23,14 @@ function App() {
   const { opened, handleToggle } = useAppShell();
 
   useEffect(() => {
-    toast.warn("try to fetch user ");
     initNotifivation();
 
     const unSub = onAuthStateChanged(auth, (user) => {
+      toast.warn("try to fetch user ");
+
       if (user?.uid) {
         fetchUserInfo(user?.uid);
         toast.success("you are singin");
-      } else {
-        toast.warn("please singup first");
       }
     });
     return () => {
