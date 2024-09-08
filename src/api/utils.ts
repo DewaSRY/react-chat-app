@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import type { GeminiResponse } from "@/types/gemini-response-types";
 export const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
   import.meta.env.VITE_GEMINI_API_KEY

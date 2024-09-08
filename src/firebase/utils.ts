@@ -24,11 +24,11 @@ export const USER_CHAT_DB = "user-chats";
 export const CHAT_DB = "chat";
 export const FCM_TOKEN_DB = "fcm-token";
 export const IMAGES_DB = "images";
+export const GEMINI_DB = "gemini";
 
 export async function requestPermision(uid: string) {
   console.log("request permision");
   const permision = await Notification.requestPermission();
-
   if (permision === "granted") {
     await saveMasagingDeviceToken(uid);
   }

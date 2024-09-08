@@ -1,5 +1,5 @@
 import ListComponent from "./components/list/list-component";
-import ChatComponent from "./components/chat/chat-component";
+// import ChatComponent from "./components/chat/chat-component";
 import UserInfoComponent from "./components/user-info/user-info-component";
 import NotificationComponent from "./components/notification/notification-component";
 import UserSettingComponent from "./components/user-setting/user-setting-component";
@@ -15,6 +15,8 @@ import useAppShell from "./zustand/use-app-shell";
 import { initNotifivation } from "@/firebase/fcm-utils";
 import { toast } from "react-toastify";
 import TextToSpeachProvider from "@/provider/text-to-speach-provider";
+import BodyComponent from "./components/body/body-component";
+// import { startChatGemini } from "@/firebase/gemini-utils";
 
 function App() {
   const { currentUser, fetchUserInfo, isLoading } = useUserStore();
@@ -22,11 +24,11 @@ function App() {
 
   useEffect(() => {
     toast.warn("try to fetch user ");
+    initNotifivation();
 
     const unSub = onAuthStateChanged(auth, (user) => {
       if (user?.uid) {
         fetchUserInfo(user?.uid);
-        initNotifivation();
         toast.success("you are singin");
       } else {
         toast.warn("please singup first");
@@ -65,7 +67,7 @@ function App() {
             </AppShell.Navbar>
 
             <AppShell.Main>
-              <ChatComponent />
+              <BodyComponent />
             </AppShell.Main>
           </AppShell>
         </>

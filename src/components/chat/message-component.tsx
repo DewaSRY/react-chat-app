@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import useUserStore from "@/zustand/use-user-store";
 import { usetextToSpeach } from "@/provider/text-to-speach-provider";
 import { Speech } from "lucide-react";
+
 interface MessageComponentProps
   extends ComponentProps<"div">,
     PropsWithChildren {
@@ -17,7 +18,7 @@ export default function MessageComponent({
   ...resProps
 }: MessageComponentProps) {
   const { currentUser } = useUserStore();
-  const { readText, isReading } = usetextToSpeach();
+  const { readText } = usetextToSpeach();
 
   function readingText() {
     // if (isReading) return;

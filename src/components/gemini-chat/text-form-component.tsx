@@ -4,16 +4,16 @@ import React, {
   PropsWithChildren,
   useRef,
 } from "react";
-import EmojiMenu from "./emoji-menu-component";
 import { Button } from "../ui/button";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import useChatStore from "@/zustand/user-chat-store";
 import useUserStore from "@/zustand/use-user-store";
 
-import { sendMessaage } from "@/firebase/chat-utils";
 import { toast } from "react-toastify";
 import useSpeeachModal from "@/zustand/user-speeach-modal";
 import { Mic } from "lucide-react";
+import { sendGeminiMessages } from "@/firebase/gemini-utils";
+import useGeminiQuery from "@/zustand/use-gemini-query";
 interface TextFormComponentProps
   extends ComponentProps<"form">,
     PropsWithChildren {}
@@ -25,14 +25,9 @@ export default function TextFormComponent({
   const { handleOpen } = useSpeeachModal();
   const { currentUser } = useUserStore();
   const { chatId, user } = useChatStore();
+  const { textingGemini, isLoading } = useGeminiQuery();
 
   const inputRef = useRef<ComponentRef<"input">>(null);
-
-  function handleEmojiClick(emoji: string) {
-    if (inputRef.current) {
-      inputRef.current.value += emoji;
-    }
-  }
 
   async function handleSendMessage(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -41,12 +36,12 @@ export default function TextFormComponent({
     const MessageText = fromData.get("text")?.toString() ?? "";
     if (!chatId && !user?.id && !currentUser?.id) return;
     try {
-      await sendMessaage({
-        chatId: chatId ?? "",
-        receiver: user?.id ?? "",
-        senderId: currentUser?.id ?? "",
+      await sendGeminiMessages({
+        geminiChatId: currentUser?.id ?? "",
+        owner: "user",
         text: MessageText,
       });
+      await textingGemini(MessageText);
     } catch (err) {
       toast.error("failed to sending messages");
     } finally {
@@ -70,8 +65,10 @@ export default function TextFormComponent({
       />
 
       <Mic className="cursor-pointer" onClick={handleOpen} />
-      <EmojiMenu handlePick={handleEmojiClick} />
-      <Button className="">
+      <Button
+        disabled={isLoading}
+        className="disabled:bg-gray-500 disabled:text-gray-200"
+      >
         Sendin <PaperPlaneIcon className="ml-2" />
       </Button>
     </form>

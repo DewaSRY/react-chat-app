@@ -16,24 +16,16 @@ import { toast } from "react-toastify";
 
 export async function sendMessaage(sendMessage: SendMesage) {
   const { chatId, receiver, senderId, text } = sendMessage;
-  // let imgUrl = null;
-
-  // if (image) {
-  //   imgUrl = await upload(image);
-  // }
-
   if (!chatId) {
     console.log("there is not chat id", chatId);
     return;
   }
-
   try {
     await updateDoc(doc(db, CHAT_DB, chatId), {
       messages: arrayUnion({
         senderId: senderId,
         text,
         createdAt: Date.now(),
-        // imgUrl: imgUrl,
       }),
     });
   } catch (error) {
