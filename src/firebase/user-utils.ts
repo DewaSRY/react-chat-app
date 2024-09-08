@@ -62,10 +62,10 @@ export async function searchUser(username: string) {
   const q = query(userRef, where("username", "==", username));
   const querySnapShot = await getDocs(q);
   if (!querySnapShot.empty && querySnapShot.docs) {
-    console.log(
-      "query search",
-      querySnapShot.docs.map((d) => d.data())
-    );
+    // console.log(
+    //   "query search",
+    //   querySnapShot.docs.map((d) => d.data())
+    // );
     return querySnapShot.docs[0].data() as User;
   }
 

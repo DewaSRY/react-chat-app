@@ -47,7 +47,7 @@ export default function MessageTextFormComponent({
         text: textValue,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error("failed to sending messages");
     } finally {
       if (inputRef.current) {
