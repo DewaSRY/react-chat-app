@@ -12,8 +12,17 @@ export interface UserLogin {
 
 export interface User {
   avatar?: string;
-  blocked: string[];
+  friends: string[];
   email: string;
   id: string;
   username: string;
+}
+
+export interface UserItem {
+  avatar?: string;
+  friends: string[];
+  email: string;
+  id: string;
+  username: string;
+  isFriends: boolean;
 }

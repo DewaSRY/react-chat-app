@@ -47,14 +47,14 @@ export default function UserLoginComponent({
           "[&>input]:p-2 [&>input]:bg-white/80 [&>input]:outline-none [&>input]:border-none"
         )}
       >
-        <label htmlFor="email">
+        <label htmlFor="email-login">
           <span className="text-gray-100">Email</span>
           <Input
             required
             type="email"
             placeholder="Insert Email"
             name="email"
-            id="email"
+            id="email-login"
           />
         </label>
         <label htmlFor="password-login">

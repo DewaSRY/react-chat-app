@@ -5,11 +5,19 @@ import {
 
 import { auth, db, USER_DB, USER_CHAT_DB } from "./utils";
 // import imgUpload from "./firebase-upload";
-import { collection, doc, getDocs, query, setDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 import { UserLogin, UserRegister } from "@/types/user-types";
 import { where } from "firebase/firestore/lite";
-import type { User } from "@/types/user-types";
+import type { User, UserItem } from "@/types/user-types";
 
 export async function userRegister(userRegister: UserRegister) {
   const userRef = collection(db, USER_DB);
@@ -22,8 +30,6 @@ export async function userRegister(userRegister: UserRegister) {
       throw Error("username already use");
   }
 
-  // const imgUrl = await imgUpload(userRegister.avatar);
-
   const res = await createUserWithEmailAndPassword(
     auth,
     userRegister.email,
@@ -33,12 +39,18 @@ export async function userRegister(userRegister: UserRegister) {
   await setDoc(doc(db, USER_DB, res.user.uid), {
     username: userRegister.username,
     email: userRegister.email,
-    // awatar: imgUrl,
     id: res.user.uid,
-    blocked: [],
+    friends: [],
   });
   await setDoc(doc(db, USER_CHAT_DB, res.user.uid), {
     chats: [],
+  });
+}
+
+export async function setFriends(userId: string, friendsId: string) {
+  const userDocRef = doc(db, USER_DB, userId);
+  await updateDoc(userDocRef, {
+    friends: arrayUnion(friendsId),
   });
 }
 
@@ -60,16 +72,20 @@ export async function searchUser(username: string) {
   return null;
 }
 
-export async function getAllUser(excludeUser: User) {
+export async function getAllUser(excludeUser: User): Promise<UserItem[]> {
   const colRef = collection(db, USER_DB);
-  let userList: User[] = [];
+  let userList: UserItem[] = [];
   const querySnapshot = await getDocs(colRef);
 
   if (!querySnapshot.empty) {
     querySnapshot.forEach((doc) => {
       const data = doc.data() as User;
       if (data.id !== excludeUser.id) {
-        userList.push(data);
+        const findId = excludeUser.friends.filter((f) => f === data.id)[0];
+        userList.push({
+          ...data,
+          isFriends: findId !== undefined,
+        });
       }
     });
   }

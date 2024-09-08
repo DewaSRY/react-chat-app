@@ -13,11 +13,13 @@ import type { SendMesage, Chet } from "@/types/chat-types";
 import type { UserChat, UserItem } from "@/types/chat-types";
 import { User } from "@/types/user-types";
 import { toast } from "react-toastify";
+import { setFriends } from "./user-utils";
 
 export async function sendMessaage(sendMessage: SendMesage) {
   const { chatId, receiver, senderId, text } = sendMessage;
   if (!chatId) {
     console.log("there is not chat id", chatId);
+
     return;
   }
   try {
@@ -50,16 +52,12 @@ async function folowUpChatData(
 ) {
   const userChatsRef = doc(db, USER_CHAT_DB, id);
   const userChatsSnapshot = await getDoc(userChatsRef);
-
   if (userChatsSnapshot.exists()) {
     const userChatsData = userChatsSnapshot.data() as { chats: Chet[] };
-
     const chatIndex = userChatsData.chats.findIndex((c) => c.chatId === chatId);
-
     userChatsData.chats[chatIndex].lastMessage = text;
     userChatsData.chats[chatIndex].isSeen = id === senderId ? true : false;
     userChatsData.chats[chatIndex].updatedAt = Date.now();
-
     await updateDoc(userChatsRef, {
       chats: userChatsData.chats,
     });
@@ -92,6 +90,8 @@ export async function addUserChat(senderId: string, userChatId: string) {
       updatedAt: Date.now(),
     }),
   });
+  await setFriends(senderId, userChatId);
+  await setFriends(userChatId, senderId);
 }
 
 function userChatComparator(a: UserItem, b: UserItem) {
