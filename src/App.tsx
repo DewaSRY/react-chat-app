@@ -14,6 +14,8 @@ import UsersModalComponent from "@/components/users-modal/users-modal-component"
 import useAppShell from "./zustand/use-app-shell";
 import { initNotifivation } from "@/firebase/fcm-utils";
 import { toast } from "react-toastify";
+import TextToSpeachProvider from "@/provider/text-to-speach-provider";
+
 function App() {
   const { currentUser, fetchUserInfo, isLoading } = useUserStore();
   const { opened, handleToggle } = useAppShell();
@@ -36,7 +38,7 @@ function App() {
   if (isLoading) return <div className="loading">Loading...</div>;
 
   return (
-    <>
+    <TextToSpeachProvider>
       {currentUser ? (
         <>
           <div className="fixed top-2 right-1 cursor-pointer ">
@@ -72,7 +74,7 @@ function App() {
       <UsersModalComponent />
       <UserSettingComponent />
       <SpeeachModalComponent />
-    </>
+    </TextToSpeachProvider>
   );
 }
 

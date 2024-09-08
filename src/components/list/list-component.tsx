@@ -9,6 +9,7 @@ import useFriendsItems from "@/zustand/use-friends-items";
 import FilterFriendsComponent from "./filter-friends-component";
 import FriendListComponent from "@/components/friend-list/friend-list-component";
 import AddFriendsComponent from "./add-friends-component";
+import VoiceOptionComponent from "./voice-option-component";
 export default function ListComponent() {
   const { setMessageItem } = useFriendsItems();
 
@@ -29,10 +30,11 @@ export default function ListComponent() {
     };
   }, [currentUser?.id]);
   return (
-    <div className=" ">
+    <div className="relative ">
       <FilterFriendsComponent />
       <AddFriendsComponent />
       <FriendListComponent />
+      <VoiceOptionComponent className="absolute bottom-6 left-1" />
     </div>
   );
 }

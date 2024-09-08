@@ -2,7 +2,7 @@ import { ComponentProps, PropsWithChildren } from "react";
 import type { UserItem } from "@/types/chat-types";
 import { format } from "timeago.js";
 import userChatStore from "@/zustand/user-chat-store";
-import useUsersModal from "@/zustand/use-users-modal";
+import useAppShell from "@/zustand/use-app-shell";
 import { cn } from "@/lib/utils";
 
 interface UserItemComponentProps
@@ -16,7 +16,7 @@ export default function UserItemComponent({
   messageItem,
   ...resProps
 }: UserItemComponentProps) {
-  const { handleClost } = useUsersModal();
+  const { handleClost } = useAppShell();
   const { updatedAt, isSeen } = messageItem;
   const { username, avatar, id } = messageItem.user;
   const { startChat } = userChatStore();
